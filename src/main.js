@@ -2,6 +2,7 @@ import {createProfileRating} from "./view/profile-rating.js";
 import {createMenuAndStats} from "./view/menu.js";
 import {createFilmcard} from "./view/film-card.js";
 import {createFilmsList} from "./view/films-list.js";
+import {createShowMoreButton} from "./view/show-more-button.js";
 
 const FILM_COUNT = 5;
 
@@ -16,8 +17,11 @@ render(profileHeader, createProfileRating(), `beforeend`);
 render(main, createMenuAndStats(), `afterbegin`);
 render(main, createFilmsList(), `beforeend`);
 
-const filmsList = main.querySelector(`.films-list .films-list__container`);
+const filmsList = main.querySelector(`.films-list`);
+const filmListContainer = filmsList.querySelector(`.films-list__container`);
 
 for (let i = 0; i < FILM_COUNT; i++) {
-  render(filmsList, createFilmcard(), `beforeend`);
+  render(filmListContainer, createFilmcard(), `beforeend`);
 }
+
+render(filmsList, createShowMoreButton(), `beforeend`);
