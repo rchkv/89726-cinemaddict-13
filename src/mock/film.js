@@ -1,4 +1,5 @@
 import path from "path";
+import dayjs from "dayjs";
 
 const getRandomInt = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -21,13 +22,7 @@ const generateTitle = () => {
 };
 
 const generateGenre = () => {
-  const genres = [
-    `Musical`,
-    `Western`,
-    `Drama`,
-    `Comedy`,
-    `Cartoon`,
-  ];
+  const genres = [`Musical`, `Western`, `Drama`, `Comedy`, `Cartoon`];
 
   const randomIndex = getRandomInt(0, genres.length - 1);
 
@@ -59,6 +54,13 @@ const generatePosterPath = () => {
   return path.resolve(`./images/posters`, posters[randomIndex]);
 };
 
+const generateDuration = () => {
+  return dayjs()
+    .hour(getRandomInt(0, 5))
+    .minute(getRandomInt(0, 59))
+    .format(`H[h] mm[m]`);
+};
+
 export const generateFilm = () => {
   return {
     title: generateTitle(),
@@ -66,6 +68,7 @@ export const generateFilm = () => {
     description: generateDescription(),
     rating: 9.3,
     year: getRandomInt(1950, 2020),
-    genre: generateGenre()
+    genre: generateGenre(),
+    duration: generateDuration(),
   };
 };
