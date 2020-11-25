@@ -1,13 +1,16 @@
 import {createProfileRating} from "./view/profile-rating.js";
 import {createMenuAndStats} from "./view/menu.js";
-import {createFilmcard} from "./view/film-card.js";
+import {createFilmcard as createFilmСard} from "./view/film-card.js";
 import {createFilmsList} from "./view/films-list.js";
 import {createShowMoreButton} from "./view/show-more-button.js";
 import {createFilmsListExtra} from "./view/film-list-extra.js";
 import {createSort} from "./view/sort.js";
+import {generateFilm} from "./mock/film.js";
 
 const FILM_COUNT = 5;
 const EXTRA_FILM_COUNT = 2;
+
+const films = new Array(FILM_COUNT).fill().map(generateFilm);
 
 const render = (container, element, place) => {
   container.insertAdjacentHTML(place, element);
@@ -26,7 +29,7 @@ const filmsList = filmsSection.querySelector(`.films-list`);
 const filmListContainer = filmsList.querySelector(`.films-list__container`);
 
 for (let i = 0; i < FILM_COUNT; i++) {
-  render(filmListContainer, createFilmcard(), `beforeend`);
+  render(filmListContainer, createFilmСard(films[i]), `beforeend`);
 }
 
 render(filmsList, createShowMoreButton(), `beforeend`);
@@ -39,6 +42,6 @@ filmsListExtra.forEach((element) => {
   const filmListExtraContainer = element.querySelector(`.films-list__container`);
 
   for (let i = 0; i < EXTRA_FILM_COUNT; i++) {
-    render(filmListExtraContainer, createFilmcard(), `beforeend`);
+    render(filmListExtraContainer, createFilmСard(films[i]), `beforeend`);
   }
 });
