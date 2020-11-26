@@ -6,6 +6,7 @@ import {createShowMoreButton} from "./view/show-more-button.js";
 import {createFilmsListExtra} from "./view/film-list-extra.js";
 import {createSort} from "./view/sort.js";
 import {generateFilm} from "./mock/film.js";
+import {createFilmsDetailsPopup} from "./view/popup.js";
 
 const FILM_COUNT = 5;
 const EXTRA_FILM_COUNT = 2;
@@ -45,3 +46,6 @@ filmsListExtra.forEach((element) => {
     render(filmListExtraContainer, createFilmСard(films[i]), `beforeend`);
   }
 });
+
+// чтобы попап не закрывал экран
+//render(main, createFilmsDetailsPopup(films[0]), `beforeend`);

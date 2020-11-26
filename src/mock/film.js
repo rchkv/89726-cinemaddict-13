@@ -62,6 +62,17 @@ const generateReleaseDate = (start, end) => {
   return dayjs(generateRandomDate(start, end)).format(`DD MMMM YYYY`);
 };
 
+const generateUniqueCompilation = (source, maxCount) => {
+  const count = getRandomInt(1, maxCount);
+  const uniqueValues = new Set();
+
+  for (let i = 0; i < count; i++) {
+    uniqueValues.add(getRandomValue(source));
+  }
+
+  return Array.from(uniqueValues);
+};
+
 export const generateFilm = () => {
   return {
     title: getRandomValue(titles),
@@ -73,7 +84,7 @@ export const generateFilm = () => {
     rating: 9.3,
     year: getRandomInt(1950, 2020),
     releaseDate: generateReleaseDate(new Date(1950, 0, 1), new Date()),
-    genres: getRandomValue(genres),
+    genres: generateUniqueCompilation(genres, 2),
     duration: generateDuration(),
     director: `Chris Nolan`,
     writers: getRandomValue(writers),
