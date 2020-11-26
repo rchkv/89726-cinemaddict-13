@@ -1,16 +1,16 @@
-import { createMenuAndStats } from "./view/menu.js";
-import { createProfileRating } from "./view/profile-rating.js";
-import { createFilmcard as createFilmСard } from "./view/film-card.js";
-import { createFilmsList } from "./view/films-list.js";
-import { createShowMoreButton } from "./view/show-more-button.js";
-import { createFilmsListExtra } from "./view/film-list-extra.js";
-import { createSort } from "./view/sort.js";
-import { createFilmsDetailsPopup } from "./view/popup.js";
-import { createFooterStats } from "./view/footer-statistics.js";
-import { generateFilm } from "./mock/film.js";
-import { generateProfile } from "./mock/profile.js";
-import { generateFilter } from "./mock/filter.js";
-import { getRandomInt } from "./utils.js";
+import {createMenuAndStats} from "./view/menu.js";
+import {createProfileRating} from "./view/profile-rating.js";
+import {createFilmcard as createFilmСard} from "./view/film-card.js";
+import {createFilmsList} from "./view/films-list.js";
+import {createShowMoreButton} from "./view/show-more-button.js";
+import {createFilmsListExtra} from "./view/film-list-extra.js";
+import {createSort} from "./view/sort.js";
+import {createFilmsDetailsPopup} from "./view/popup.js";
+import {createFooterStats} from "./view/footer-statistics.js";
+import {generateFilm} from "./mock/film.js";
+import {generateProfile} from "./mock/profile.js";
+import {generateFilter} from "./mock/filter.js";
+import {getRandomInt} from "./utils.js";
 
 const FILM_COUNT = 19;
 const EXTRA_FILM_COUNT = 2;
@@ -72,7 +72,7 @@ const filmsListExtra = filmsSection.querySelectorAll(`.films-list--extra`);
 
 filmsListExtra.forEach((element) => {
   const filmListExtraContainer = element.querySelector(
-    `.films-list__container`
+      `.films-list__container`
   );
 
   for (let i = 0; i < EXTRA_FILM_COUNT; i++) {
