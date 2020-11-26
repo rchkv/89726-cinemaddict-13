@@ -92,5 +92,8 @@ export const generateFilm = () => {
     country: getRandomValue(countries),
     age: getRandomInt(0, 18),
     comments: generateComments(getRandomInt(0, 5)),
+    isWatchList: Boolean(getRandomInt(0, 1)),
+    isWatched: Boolean(getRandomInt(0, 1)),
+    isFavorites: Boolean(getRandomInt(0, 1))
   };
 };

@@ -7,6 +7,7 @@ import {createFilmsListExtra} from "./view/film-list-extra.js";
 import {createSort} from "./view/sort.js";
 import {generateFilm} from "./mock/film.js";
 import {generateProfile} from "./mock/profile.js";
+import {generateFilter} from "./mock/filter.js";
 import {createFilmsDetailsPopup} from "./view/popup.js";
 import {getRandomInt} from "./utils.js";
 
@@ -15,6 +16,7 @@ const EXTRA_FILM_COUNT = 2;
 
 const films = new Array(FILM_COUNT).fill().map(generateFilm);
 const profileRating = generateProfile(getRandomInt(0, 30));
+const filters = generateFilter(films);
 
 const render = (container, element, place) => {
   container.insertAdjacentHTML(place, element);
@@ -24,7 +26,7 @@ const profileHeader = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 
 render(profileHeader, createProfileRating(profileRating), `beforeend`);
-render(main, createMenuAndStats(), `afterbegin`);
+render(main, createMenuAndStats(filters), `afterbegin`);
 render(main, createSort(), `beforeend`);
 render(main, createFilmsList(), `beforeend`);
 
