@@ -61,14 +61,31 @@ const generateDuration = () => {
     .format(`H[h] mm[m]`);
 };
 
+const generateReleaseDate = (start, end) => {
+  const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  return dayjs(randomDate).format(`DD MMMM YYYY`);
+};
+
+const generateActors = () => {
+  const actors = [`Сильвестр Сталлоне`, `Дольф Лундгрен`, `Джеки Чан`];
+
+  const randomIndex = getRandomInt(0, actors.length - 1);
+  return actors[randomIndex];
+};
+
 export const generateFilm = () => {
   return {
     title: generateTitle(),
+    originalTitle: generateTitle(),
     poster: generatePosterPath(),
+    fullSizePoster: generatePosterPath(),
     description: generateDescription(),
     rating: 9.3,
     year: getRandomInt(1950, 2020),
+    releaseDate: generateReleaseDate(new Date(1950, 0, 1), new Date()),
     genre: generateGenre(),
     duration: generateDuration(),
+    producer: `Chris Nolan`,
+    actors: generateActors(),
   };
 };
