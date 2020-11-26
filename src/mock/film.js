@@ -11,6 +11,11 @@ const titles = [
   `Popeye the Sailor Meets Sindbad the Sailor`,
 ];
 
+const writers = [
+  `Steven King`,
+  `Martin Scorsese`
+];
+
 const genres = [`Musical`, `Western`, `Drama`, `Comedy`, `Cartoon`];
 
 const actors = [`Сильвестр Сталлоне`, `Дольф Лундгрен`, `Джеки Чан`];
@@ -68,9 +73,10 @@ export const generateFilm = () => {
     rating: 9.3,
     year: getRandomInt(1950, 2020),
     releaseDate: generateReleaseDate(new Date(1950, 0, 1), new Date()),
-    genre: getRandomValue(genres),
+    genres: getRandomValue(genres),
     duration: generateDuration(),
-    producer: `Chris Nolan`,
+    director: `Chris Nolan`,
+    writers: getRandomValue(writers),
     actors: getRandomValue(actors),
     country: getRandomValue(countries),
     age: getRandomInt(0, 18),
