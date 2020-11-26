@@ -5,10 +5,11 @@ import {createFilmsList} from "./view/films-list.js";
 import {createShowMoreButton} from "./view/show-more-button.js";
 import {createFilmsListExtra} from "./view/film-list-extra.js";
 import {createSort} from "./view/sort.js";
+import {createFilmsDetailsPopup} from "./view/popup.js";
+import {createFooterStats} from "./view/footer-statistics.js";
 import {generateFilm} from "./mock/film.js";
 import {generateProfile} from "./mock/profile.js";
 import {generateFilter} from "./mock/filter.js";
-import {createFilmsDetailsPopup} from "./view/popup.js";
 import {getRandomInt} from "./utils.js";
 
 const FILM_COUNT = 5;
@@ -24,11 +25,13 @@ const render = (container, element, place) => {
 
 const profileHeader = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
+const footerStatistics = document.querySelector(`.footer__statistics`);
 
 render(profileHeader, createProfileRating(profileRating), `beforeend`);
 render(main, createMenuAndStats(filters), `afterbegin`);
 render(main, createSort(), `beforeend`);
 render(main, createFilmsList(), `beforeend`);
+render(footerStatistics, createFooterStats(FILM_COUNT), `beforeend`);
 
 const filmsSection = main.querySelector(`.films`);
 const filmsList = filmsSection.querySelector(`.films-list`);
@@ -51,6 +54,7 @@ filmsListExtra.forEach((element) => {
     render(filmListExtraContainer, createFilmСard(films[i]), `beforeend`);
   }
 });
+
 
 // чтобы попап не закрывал экран
 // render(main, createFilmsDetailsPopup(films[0]), `beforeend`);

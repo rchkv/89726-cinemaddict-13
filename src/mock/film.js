@@ -1,4 +1,3 @@
-import path from "path";
 import dayjs from "dayjs";
 import {getRandomInt, getRandomValue, generateRandomDate} from "../utils.js";
 import {generateComments} from "./comment.js";
