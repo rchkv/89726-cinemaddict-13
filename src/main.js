@@ -1,6 +1,6 @@
 import {createMenuAndStats} from "./view/menu.js";
 import {createProfileRating} from "./view/profile-rating.js";
-import {createFilmcard as createFilmСard} from "./view/film-card.js";
+import {createFilmСard} from "./view/film-card.js";
 import {createFilmsList} from "./view/films-list.js";
 import {createShowMoreButton} from "./view/show-more-button.js";
 import {createFilmsListExtra} from "./view/film-list-extra.js";
