@@ -8,16 +8,13 @@ import {createSort} from "./view/sort.js";
 import {createFilmsDetailsPopup} from "./view/popup.js";
 import {createFooterStats} from "./view/footer-statistics.js";
 import {generateFilm} from "./mock/film.js";
-import {generateProfile} from "./mock/profile.js";
 import {generateFilter} from "./mock/filter.js";
-import {getRandomInt} from "./utils.js";
 
 const FILM_COUNT = 19;
 const EXTRA_FILM_COUNT = 2;
 const FILMS_COUNT_PER_STEP = 5;
 
 const films = new Array(FILM_COUNT).fill().map(generateFilm);
-const profileRating = generateProfile(getRandomInt(0, 30));
 const filters = generateFilter(films);
 
 const render = (container, element, place) => {
@@ -28,7 +25,7 @@ const profileHeader = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 const footerStatistics = document.querySelector(`.footer__statistics`);
 
-render(profileHeader, createProfileRating(profileRating), `beforeend`);
+render(profileHeader, createProfileRating(films), `beforeend`);
 render(main, createMenuAndStats(filters), `afterbegin`);
 render(main, createSort(), `beforeend`);
 render(main, createFilmsList(), `beforeend`);
