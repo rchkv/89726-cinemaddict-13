@@ -4,6 +4,10 @@ export const getRandomInt = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
+export const getRandomFloat = (a = 0, b = 10) => {
+  return (Math.random() * (a - b) + b).toFixed(2);
+};
+
 export const getRandomValue = (list) => {
   const randomIndex = getRandomInt(0, list.length - 1);
   return list[randomIndex];

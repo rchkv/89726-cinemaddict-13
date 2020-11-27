@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import {getRandomInt, getRandomValue, generateRandomDate} from "../utils.js";
+import {getRandomInt, getRandomFloat, getRandomValue, generateRandomDate} from "../utils.js";
 import {generateComments} from "./comment.js";
 
 const titles = [
@@ -80,7 +80,7 @@ export const generateFilm = () => {
     fullSizePoster: getRandomValue(posters),
     description: generateFullDescription(false),
     fullDescription: generateFullDescription(),
-    rating: 9.3,
+    rating: getRandomFloat(),
     year: getRandomInt(1950, 2020),
     releaseDate: generateReleaseDate(new Date(1950, 0, 1), new Date()),
     genres: generateUniqueCompilation(genres, 2),
