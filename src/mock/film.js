@@ -17,9 +17,22 @@ const writers = [
 
 const genres = [`Musical`, `Western`, `Drama`, `Comedy`, `Cartoon`];
 
-const actors = [`Сильвестр Сталлоне`, `Дольф Лундгрен`, `Джеки Чан`];
-
 const countries = [`Боствана`, `Тринидад`, `Морокко`];
+
+const actors = [
+  `Silvestr Stallone`,
+  `Dolf Lundgren`,
+  `Jacki Chan`,
+  `Mila Yovovivch`,
+  `Konstantin Habensky`
+];
+
+const directors = [
+  `Chris Nolan`,
+  `Nikita Mihalkov`,
+  `Steven Spielberg`
+];
+
 
 const posters = [
   `./images/posters/made-for-each-other.png`,
@@ -85,9 +98,9 @@ export const generateFilm = () => {
     releaseDate: generateReleaseDate(new Date(1950, 0, 1), new Date()),
     genres: generateUniqueCompilation(genres, 2),
     duration: generateDuration(),
-    director: `Chris Nolan`,
-    writers: getRandomValue(writers),
-    actors: getRandomValue(actors),
+    director: getRandomValue(directors),
+    writers: generateUniqueCompilation(writers, 2),
+    actors: generateUniqueCompilation(actors, 4),
     country: getRandomValue(countries),
     age: getRandomInt(0, 18),
     comments: generateComments(getRandomInt(0, 5)),

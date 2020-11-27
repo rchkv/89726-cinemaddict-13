@@ -5,7 +5,7 @@ export const getRandomInt = (a = 0, b = 1) => {
 };
 
 export const getRandomFloat = (a = 0, b = 10) => {
-  return (Math.random() * (a - b) + b).toFixed(2);
+  return (Math.random() * (a - b) + b).toFixed(1);
 };
 
 export const getRandomValue = (list) => {
