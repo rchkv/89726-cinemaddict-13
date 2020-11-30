@@ -1,15 +1,15 @@
 import {MenuAndStats} from "./view/menu.js";
 import {ProfileRating} from "./view/profile-rating.js";
-import {createFilmСard} from "./view/film-card.js";
+import {FilmCard} from "./view/film-card.js";
 import {FilmsList} from "./view/films-list.js";
 import {ShowMoreButton} from "./view/show-more-button.js";
 import {FilmsListExtra} from "./view/film-list-extra.js";
-import {createSort} from "./view/sort.js";
-import {createFilmsDetailsPopup} from "./view/popup.js";
+import {Sort} from "./view/sort.js";
+import {Popup} from "./view/popup.js";
 import {FooterStats} from "./view/footer-statistics.js";
 import {generateFilm} from "./mock/film.js";
 import {generateFilter} from "./mock/filter.js";
-import {renderTemplate, renderElement, RenderPosition} from "./utils.js";
+import {renderElement, RenderPosition} from "./utils.js";
 
 const FILM_COUNT = 19;
 const EXTRA_FILM_COUNT = 2;
@@ -24,7 +24,7 @@ const footerStatistics = document.querySelector(`.footer__statistics`);
 
 renderElement(profileHeader, new ProfileRating(films).getElement(), RenderPosition.BEFOREEND);
 renderElement(main, new MenuAndStats(filters).getElement(), RenderPosition.AFTERBEGIN);
-renderTemplate(main, createSort(), `beforeend`);
+renderElement(main, new Sort().getElement(), RenderPosition.BEFOREEND);
 renderElement(main, new FilmsList().getElement(), RenderPosition.BEFOREEND);
 renderElement(footerStatistics, new FooterStats(FILM_COUNT).getElement(), RenderPosition.BEFOREEND);
 
@@ -33,7 +33,7 @@ const filmsList = filmsSection.querySelector(`.films-list`);
 const filmListContainer = filmsList.querySelector(`.films-list__container`);
 
 for (let i = 0; i < Math.min(films.length, FILMS_COUNT_PER_STEP); i++) {
-  renderTemplate(filmListContainer, createFilmСard(films[i]), `beforeend`);
+  renderElement(filmListContainer, new FilmCard(films[i]).getElement(), RenderPosition.BEFOREEND);
 }
 
 if (films.length > FILMS_COUNT_PER_STEP) {
@@ -48,7 +48,7 @@ if (films.length > FILMS_COUNT_PER_STEP) {
     films
       .slice(renderedFilmsCount, renderedFilmsCount + FILMS_COUNT_PER_STEP)
       .forEach((film) =>
-        renderTemplate(filmListContainer, createFilmСard(film), `beforeend`)
+        renderElement(filmListContainer, new FilmCard(film).getElement(), RenderPosition.BEFOREEND)
       );
 
     renderedFilmsCount += FILMS_COUNT_PER_STEP;
@@ -70,8 +70,8 @@ filmsListExtra.forEach((element) => {
   );
 
   for (let i = 0; i < EXTRA_FILM_COUNT; i++) {
-    renderTemplate(filmListExtraContainer, createFilmСard(films[i]), `beforeend`);
+    renderElement(filmListExtraContainer, new FilmCard(films[i]).getElement(), RenderPosition.BEFOREEND);
   }
 });
 
-renderTemplate(main, createFilmsDetailsPopup(films[0]), `beforeend`);
+renderElement(main, new Popup(films[0]).getElement(), RenderPosition.BEFOREEND);
