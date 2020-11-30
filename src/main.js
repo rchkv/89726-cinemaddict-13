@@ -1,7 +1,7 @@
 import {createMenuAndStats} from "./view/menu.js";
 import {createProfileRating} from "./view/profile-rating.js";
 import {createFilmСard} from "./view/film-card.js";
-import {createFilmsList} from "./view/films-list.js";
+import {FilmsList} from "./view/films-list.js";
 import {createShowMoreButton} from "./view/show-more-button.js";
 import {createFilmsListExtra} from "./view/film-list-extra.js";
 import {createSort} from "./view/sort.js";
@@ -25,7 +25,7 @@ const footerStatistics = document.querySelector(`.footer__statistics`);
 renderTemplate(profileHeader, createProfileRating(films), `beforeend`);
 renderTemplate(main, createMenuAndStats(filters), `afterbegin`);
 renderTemplate(main, createSort(), `beforeend`);
-renderTemplate(main, createFilmsList(), `beforeend`);
+renderElement(main, new FilmsList().getElement(), RenderPosition.BEFOREEND);
 renderTemplate(footerStatistics, createFooterStats(FILM_COUNT), `beforeend`);
 
 const filmsSection = main.querySelector(`.films`);
