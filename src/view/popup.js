@@ -100,7 +100,7 @@ const createFilmsDetailsPopupTemplate = (film) => {
   const detailsMarkup = createFilmDetailsMarkup(film);
   const commentsMarkup = createCommentsMarkup(comments);
 
-  return `<section class="film-details visually-hidden">
+  return `<section class="film-details">
     <form class="film-details__inner" action="" method="get">
       <div class="film-details__top-container">
         <div class="film-details__close">
