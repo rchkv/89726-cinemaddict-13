@@ -36,20 +36,35 @@ const filmListContainer = filmsList.querySelector(`.films-list__container`);
 const renderFilmCard = (filmListElement, film) => {
   const filmComponent = new FilmCard(film);
   const filmPopup = new Popup(film);
-  const listenerComponents = [`.film-card__poster`, `.film-card__title`, `.film-card__comments`];
 
-  for (const item of listenerComponents) {
-    filmComponent.getElement().querySelector(item).addEventListener(`click`, () => {
-      main.appendChild(filmPopup.getElement());
-      body.classList.add(`hide-overflow`);
-    });
-  }
-
-  filmPopup.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, () => {
+  const closePopup = () => {
     main.removeChild(filmPopup.getElement());
     filmPopup.removeElement();
     body.classList.remove(`hide-overflow`);
-  });
+  };
+
+  const onEscKeyDown = (evt) => {
+    if (evt.key === `Escape`) {
+      closePopup();
+      body.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
+
+  const onCloseButtonClick = () => {
+    closePopup();
+    body.removeEventListener(`keydown`, onEscKeyDown);
+  };
+
+  const onFilmCardClick = () => {
+    main.appendChild(filmPopup.getElement());
+    body.classList.add(`hide-overflow`);
+    filmPopup.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, onCloseButtonClick);
+    body.addEventListener(`keydown`, onEscKeyDown);
+  };
+
+  filmComponent.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, onFilmCardClick);
+  filmComponent.getElement().querySelector(`.film-card__title`).addEventListener(`click`, onFilmCardClick);
+  filmComponent.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, onFilmCardClick);
 
   render(filmListElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
 };
