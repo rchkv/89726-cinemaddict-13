@@ -1,3 +1,5 @@
+import {createElement} from "../utils.js";
+
 const createGenresMarkup = (genres) => {
 
   const genresList = genres.map((genre) => {
@@ -81,7 +83,7 @@ const createCommentsMarkup = (comments) => {
   }).join(``);
 };
 
-export const createFilmsDetailsPopup = (film) => {
+const createFilmsDetailsPopupTemplate = (film) => {
   const {
     title,
     originalTitle,
@@ -179,3 +181,26 @@ export const createFilmsDetailsPopup = (film) => {
     </form>
   </section>`;
 };
+
+export class Popup {
+  constructor(film) {
+    this._element = null;
+    this._film = film;
+  }
+
+  getTemplate() {
+    return createFilmsDetailsPopupTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

@@ -1,5 +1,7 @@
-export const createFilmСard = (film) => {
-  const {title, poster, description, rating, year, genres, duration, comments} = film;
+import {createElement} from "../utils.js";
+
+const createFilmСardTemplate = (film) => {
+  const {title, poster, description, rating, year, genres, duration, comments, isWatchList, isWatched, isFavorites} = film;
 
   return `<article class="film-card">
     <h3 class="film-card__title">${title}</h3>
@@ -13,9 +15,33 @@ export const createFilmСard = (film) => {
     <p class="film-card__description">${description}</p>
     <a class="film-card__comments">${comments.length} comments</a>
     <div class="film-card__controls">
-      <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist" type="button">Add to watchlist</button>
-      <button class="film-card__controls-item button film-card__controls-item--mark-as-watched" type="button">Mark as watched</button>
-      <button class="film-card__controls-item button film-card__controls-item--favorite" type="button">Mark as favorite</button>
+      <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${isWatchList ? `film-card__controls-item--active` : ``}" type="button">Add to watchlist</button>
+      <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${isWatched ? `film-card__controls-item--active` : ``}" type="button">Mark as watched</button>
+      <button class="film-card__controls-item button film-card__controls-item--favorite ${isFavorites ? `film-card__controls-item--active` : ``}" type="button">Mark as favorite</button>
     </div>
   </article>`;
 };
+
+export class FilmCard {
+  constructor(film) {
+    this._element = null;
+    this._film = film;
+  }
+
+  getTemplate() {
+    return createFilmСardTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
+
