@@ -41,7 +41,3 @@ export const generateRandomDate = (start, end) => {
       start.getTime() + Math.random() * (end.getTime() - start.getTime())
   );
 };
-
-export const renderTemplate = (container, element, place) => {
-  container.insertAdjacentHTML(place, element);
-};
