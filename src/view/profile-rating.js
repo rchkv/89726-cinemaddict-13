@@ -1,3 +1,5 @@
+import {createElement} from "../utils.js";
+
 const calculateRating = (films) => {
   const isWatchedFilmsCount = films.filter((film) => film.isWatched).length;
   let profileRating = ``;
@@ -15,7 +17,7 @@ const calculateRating = (films) => {
   return profileRating;
 };
 
-export const createProfileRating = (films) => {
+const createProfileRatingTemplate = (films) => {
   const rating = calculateRating(films);
 
   return `<section class="header__profile profile">
@@ -26,3 +28,26 @@ export const createProfileRating = (films) => {
     <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
   </section>`;
 };
+
+export class ProfileRating {
+  constructor(films) {
+    this._element = null;
+    this._films = films;
+  }
+
+  getTemplate() {
+    return createProfileRatingTemplate(this._films);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

@@ -1,12 +1,12 @@
-import {createMenuAndStats} from "./view/menu.js";
-import {createProfileRating} from "./view/profile-rating.js";
+import {MenuAndStats} from "./view/menu.js";
+import {ProfileRating} from "./view/profile-rating.js";
 import {createFilmСard} from "./view/film-card.js";
 import {FilmsList} from "./view/films-list.js";
-import {createShowMoreButton} from "./view/show-more-button.js";
-import {createFilmsListExtra} from "./view/film-list-extra.js";
+import {ShowMoreButton} from "./view/show-more-button.js";
+import {FilmsListExtra} from "./view/film-list-extra.js";
 import {createSort} from "./view/sort.js";
 import {createFilmsDetailsPopup} from "./view/popup.js";
-import {createFooterStats} from "./view/footer-statistics.js";
+import {FooterStats} from "./view/footer-statistics.js";
 import {generateFilm} from "./mock/film.js";
 import {generateFilter} from "./mock/filter.js";
 import {renderTemplate, renderElement, RenderPosition} from "./utils.js";
@@ -22,11 +22,11 @@ const profileHeader = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 const footerStatistics = document.querySelector(`.footer__statistics`);
 
-renderTemplate(profileHeader, createProfileRating(films), `beforeend`);
-renderTemplate(main, createMenuAndStats(filters), `afterbegin`);
+renderElement(profileHeader, new ProfileRating(films).getElement(), RenderPosition.BEFOREEND);
+renderElement(main, new MenuAndStats(filters).getElement(), RenderPosition.AFTERBEGIN);
 renderTemplate(main, createSort(), `beforeend`);
 renderElement(main, new FilmsList().getElement(), RenderPosition.BEFOREEND);
-renderTemplate(footerStatistics, createFooterStats(FILM_COUNT), `beforeend`);
+renderElement(footerStatistics, new FooterStats(FILM_COUNT).getElement(), RenderPosition.BEFOREEND);
 
 const filmsSection = main.querySelector(`.films`);
 const filmsList = filmsSection.querySelector(`.films-list`);
@@ -39,7 +39,7 @@ for (let i = 0; i < Math.min(films.length, FILMS_COUNT_PER_STEP); i++) {
 if (films.length > FILMS_COUNT_PER_STEP) {
   let renderedFilmsCount = FILMS_COUNT_PER_STEP;
 
-  renderTemplate(filmsList, createShowMoreButton(), `beforeend`);
+  renderElement(filmsList, new ShowMoreButton().getElement(), RenderPosition.BEFOREEND);
 
   const showMoreButton = filmsList.querySelector(`.films-list__show-more`);
 
@@ -59,8 +59,8 @@ if (films.length > FILMS_COUNT_PER_STEP) {
   });
 }
 
-renderTemplate(filmsSection, createFilmsListExtra(`Top rated`), `beforeend`);
-renderTemplate(filmsSection, createFilmsListExtra(`Most commented`), `beforeend`);
+renderElement(filmsSection, new FilmsListExtra(`Top rated`).getElement(), RenderPosition.BEFOREEND);
+renderElement(filmsSection, new FilmsListExtra(`Most commented`).getElement(), RenderPosition.BEFOREEND);
 
 const filmsListExtra = filmsSection.querySelectorAll(`.films-list--extra`);
 
