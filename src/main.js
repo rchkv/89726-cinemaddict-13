@@ -77,5 +77,4 @@ filmsListExtra.forEach((element) => {
   }
 });
 
-// чтобы попап не закрывал экран
-// render(main, createFilmsDetailsPopup(films[0]), `beforeend`);
+render(main, createFilmsDetailsPopup(films[0]), `beforeend`);
