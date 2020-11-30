@@ -32,8 +32,14 @@ const filmsSection = main.querySelector(`.films`);
 const filmsList = filmsSection.querySelector(`.films-list`);
 const filmListContainer = filmsList.querySelector(`.films-list__container`);
 
+const renderFilmCard = (filmListElement, film) => {
+  const filmComponent = new FilmCard(film);
+
+  render(filmListElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
+};
+
 for (let i = 0; i < Math.min(films.length, FILMS_COUNT_PER_STEP); i++) {
-  render(filmListContainer, new FilmCard(films[i]).getElement(), RenderPosition.BEFOREEND);
+  renderFilmCard(filmListContainer, films[i]);
 }
 
 if (films.length > FILMS_COUNT_PER_STEP) {
@@ -47,8 +53,7 @@ if (films.length > FILMS_COUNT_PER_STEP) {
     evt.preventDefault();
     films
       .slice(renderedFilmsCount, renderedFilmsCount + FILMS_COUNT_PER_STEP)
-      .forEach((film) =>
-        render(filmListContainer, new FilmCard(film).getElement(), RenderPosition.BEFOREEND)
+      .forEach((film) => renderFilmCard(filmListContainer, film)
       );
 
     renderedFilmsCount += FILMS_COUNT_PER_STEP;
@@ -70,8 +75,13 @@ filmsListExtra.forEach((element) => {
   );
 
   for (let i = 0; i < EXTRA_FILM_COUNT; i++) {
-    render(filmListExtraContainer, new FilmCard(films[i]).getElement(), RenderPosition.BEFOREEND);
+    renderFilmCard(filmListExtraContainer, films[i]);
   }
 });
 
-render(main, new Popup(films[0]).getElement(), RenderPosition.BEFOREEND);
+
+
+
+//render(main, new Popup(films[0]).getElement(), RenderPosition.BEFOREEND);
+
+
