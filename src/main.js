@@ -63,13 +63,11 @@ if (films.length === 0) {
     const onFilmCardClick = () => {
       main.appendChild(filmPopup.getElement());
       body.classList.add(`hide-overflow`);
-      filmPopup.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, onCloseButtonClick);
+      filmPopup.setClickHandler(onCloseButtonClick);
       body.addEventListener(`keydown`, onEscKeyDown);
     };
 
-    filmComponent.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, onFilmCardClick);
-    filmComponent.getElement().querySelector(`.film-card__title`).addEventListener(`click`, onFilmCardClick);
-    filmComponent.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, onFilmCardClick);
+    filmComponent.setClickHandler(onFilmCardClick);
 
     render(filmListElement, filmComponent, RenderPosition.BEFOREEND);
   };

@@ -187,9 +187,20 @@ export default class Popup extends Abstract {
     super();
 
     this._film = film;
+    this._clickHandler = this._clickHandler.bind(this);
   }
 
   getTemplate() {
     return createFilmsDetailsPopupTemplate(this._film);
+  }
+
+  _clickHandler(evt) {
+    evt.preventDefault();
+    this._callback.click();
+  }
+
+  setClickHandler(callback) {
+    this._callback.click = callback;
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._clickHandler);
   }
 }
