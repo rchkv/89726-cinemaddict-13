@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import Abstract from "./abstract.js";
 
 const calculateRating = (films) => {
   const isWatchedFilmsCount = films.filter((film) => film.isWatched).length;
@@ -29,25 +29,14 @@ const createProfileRatingTemplate = (films) => {
   </section>`;
 };
 
-export default class ProfileRating {
+export default class ProfileRating extends Abstract {
   constructor(films) {
-    this._element = null;
+    super();
+
     this._films = films;
   }
 
   getTemplate() {
     return createProfileRatingTemplate(this._films);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
