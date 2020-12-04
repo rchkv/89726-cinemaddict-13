@@ -10,7 +10,7 @@ const createFilmsListTemplate = () => {
   </section>`;
 };
 
-export class FilmsList {
+export default class FilmsList {
   constructor() {
     this._element = null;
   }

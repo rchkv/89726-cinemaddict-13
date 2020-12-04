@@ -8,7 +8,7 @@ const createFilmsListExtraTemplate = (listTitle) => {
   </section>`;
 };
 
-export class FilmsListExtra {
+export default class FilmsListExtra {
   constructor(listTitle) {
     this._element = null;
     this._listTitle = listTitle;

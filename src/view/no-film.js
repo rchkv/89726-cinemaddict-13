@@ -4,7 +4,7 @@ const createEmplyListTemplate = () => {
   return `<h2 class="films-list__title">There are no movies in our database</h2>`;
 };
 
-export class NoFilmList {
+export default class NoFilmList {
   constructor() {
     this._element = null;
   }

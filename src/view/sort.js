@@ -9,7 +9,7 @@ const createSortTemplate = () => {
 };
 
 
-export class Sort {
+export default class Sort {
   constructor() {
     this._element = null;
   }

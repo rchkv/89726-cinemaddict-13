@@ -29,7 +29,7 @@ const createProfileRatingTemplate = (films) => {
   </section>`;
 };
 
-export class ProfileRating {
+export default class ProfileRating {
   constructor(films) {
     this._element = null;
     this._films = films;

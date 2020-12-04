@@ -23,7 +23,7 @@ const createMenuAndStatsTemplate = (filterItems) => {
   );
 };
 
-export class MenuAndStats {
+export default class MenuAndStats {
   constructor(filterItems) {
     this._element = null;
     this._filterItems = filterItems;
