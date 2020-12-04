@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import {getRandomInt, getRandomValue, generateRandomDate} from "../utils.js";
+import {getRandomInt, getRandomValue, generateRandomDate} from "../utils/random.js";
 
 const comments = [`Interesting film`, `Very bad`, `Boring`];
 
