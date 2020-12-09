@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
-import {getRandomInt, getRandomValue, generateRandomDate} from "../utils/random.js";
+import {getRandomInt, getRandomValue, generateRandomDate} from "../utils/common.js";
+import {EMOJIS} from "../const.js";
 
 const comments = [`Interesting film`, `Very bad`, `Boring`];
 
@@ -7,9 +8,8 @@ const firstNames = [`Michael`, `Stewart`, `Paul`];
 
 const lastNames = [`Ballack`, `Downing`, `Scholes`];
 
-const emotions = [`smile`, `sleeping`, `puke`, `angry`];
-
 const generateRandomName = () => {
+
   return `${getRandomValue(firstNames)} ${getRandomValue(lastNames)}`;
 };
 
@@ -22,10 +22,10 @@ const generateDate = (start, end) => {
 
 const generateComment = () => {
   return {
-    emotion: getRandomValue(emotions),
+    emoji: getRandomValue(EMOJIS),
     text: getRandomValue(comments),
     author: generateRandomName(),
-    day: generateDate(new Date(2020, 0, 1), new Date()),
+    day: generateDate(new Date(2020, 0, 1), new Date())
   };
 };
 
