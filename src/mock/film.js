@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
-import {getRandomInt, getRandomFloat, getRandomValue, generateRandomDate} from "../utils/random.js";
+import {getRandomInt, getRandomFloat, generateRandomDate, getRandomBoolean, getRandomValue, generateUniqueCompilation} from "../utils/common.js";
 import {generateComments} from "./comment.js";
+
+const MAX_COMMENTS = 5;
 
 const titles = [
   `The Dance of Life`,
@@ -63,6 +65,31 @@ const generateFullDescription = (full = true) => {
   return textSuggestions;
 };
 
+const ageRatings = [`0`, `6`, `12`, `16`, `18`];
+
+const FilmWritersCount = {
+  MIN: 1,
+  MAX: 3
+};
+
+const FilmActorsCount = {
+  MIN: 3,
+  MAX: 5
+};
+
+const FilmGenresCount = {
+  MIN: 1,
+  MAX: 3
+};
+
+const generateID = () => {
+  return Date.now() + parseInt(Math.random() * 10000, 10);
+};
+
+const generateReleaseDate = (start, end) => {
+  return dayjs(generateRandomDate(start, end)).format(`DD MMMM YYYY`);
+};
+
 const generateDuration = () => {
   return dayjs()
     .hour(getRandomInt(0, 5))
@@ -70,42 +97,44 @@ const generateDuration = () => {
     .format(`H[h] mm[m]`);
 };
 
-const generateReleaseDate = (start, end) => {
-  return dayjs(generateRandomDate(start, end)).format(`DD MMMM YYYY`);
-};
+const generateFilm = () => {
+  const commentsCount = getRandomInt(0, MAX_COMMENTS);
 
-const generateUniqueCompilation = (source, maxCount) => {
-  const count = getRandomInt(1, maxCount);
-  const uniqueValues = new Set();
-
-  for (let i = 0; i < count; i++) {
-    uniqueValues.add(getRandomValue(source));
-  }
-
-  return Array.from(uniqueValues);
-};
-
-export const generateFilm = () => {
   return {
+    id: generateID(),
+    poster: getRandomValue(posters),
     title: getRandomValue(titles),
     originalTitle: getRandomValue(titles),
-    poster: getRandomValue(posters),
-    fullSizePoster: getRandomValue(posters),
-    description: generateFullDescription(false),
-    fullDescription: generateFullDescription(),
     rating: getRandomFloat(),
-    year: getRandomInt(1950, 2020),
-    releaseDate: generateReleaseDate(new Date(1950, 0, 1), new Date()),
-    genres: generateUniqueCompilation(genres, 2),
-    duration: generateDuration(),
     director: getRandomValue(directors),
-    writers: generateUniqueCompilation(writers, 2),
-    actors: generateUniqueCompilation(actors, 4),
+    writers: generateUniqueCompilation(writers, FilmWritersCount),
+    actors: generateUniqueCompilation(actors, FilmActorsCount),
+    releaseDate: generateReleaseDate(new Date(1950, 0, 1), new Date()),
+    duration: generateDuration(),
     country: getRandomValue(countries),
-    age: getRandomInt(0, 18),
-    comments: generateComments(getRandomInt(0, 5)),
-    isWatchList: Boolean(getRandomInt(0, 1)),
-    isWatched: Boolean(getRandomInt(0, 1)),
-    isFavorites: Boolean(getRandomInt(0, 1))
+    genres: generateUniqueCompilation(genres, FilmGenresCount),
+    shortDescription: generateFullDescription(false),
+    description: generateFullDescription(),
+    age: getRandomValue(ageRatings),
+    comments: generateComments(commentsCount),
+    isWatchList: getRandomBoolean(),
+    isWatched: getRandomBoolean(),
+    isFavorites: getRandomBoolean()
   };
+};
+
+export const generateFilms = (count) => {
+  return new Array(count).fill().map(generateFilm);
+};
+
+export const getTopRatedFilms = (films) => {
+  return films.slice().sort((a, b) => {
+    return b.rating - a.rating;
+  });
+};
+
+export const getMostCommentedFilms = (films) => {
+  return films.slice().sort((a, b) => {
+    return b.comments.length - a.comments.length;
+  });
 };

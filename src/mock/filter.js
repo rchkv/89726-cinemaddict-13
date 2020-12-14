@@ -1,14 +1,21 @@
-const filmToFilterMap = {
-  Watchlist: (films) => films.filter((film) => film.isWatchList).length,
-  History: (films) => films.filter((film) => film.isWatched).length,
-  Favorites: (films) => films.filter((film) => film.isFavorites).length,
+const addFilteredFilmsCount = (filter, check) => {
+  return (check) ? (filter || 0) + 1 : filter || 0;
 };
 
-export const generateFilter = (films) => {
-  return Object.entries(filmToFilterMap).map(([filterName, countfilms]) => {
+export const generateFilters = (films) => {
+  if (films.length === 0) {
     return {
-      name: filterName,
-      count: countfilms(films),
+      watchlist: 0,
+      history: 0,
+      favorites: 0
     };
-  });
+  }
+
+  return films.reduce((filter, film) => {
+    filter.watchlist = addFilteredFilmsCount(filter.watchlist, film.isWatchList);
+    filter.history = addFilteredFilmsCount(filter.history, film.isWatched);
+    filter.favorites = addFilteredFilmsCount(filter.favorites, film.isFavorites);
+
+    return filter;
+  }, {});
 };

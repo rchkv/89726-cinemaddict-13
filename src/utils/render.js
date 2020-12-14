@@ -5,7 +5,7 @@ export const RenderPosition = {
   BEFOREEND: `beforeend`
 };
 
-export const render = (container, child, place) => {
+export const render = (container, child, place = RenderPosition.BEFOREEND) => {
   if (container instanceof Abstract) {
     container = container.getElement();
   }
@@ -24,9 +24,42 @@ export const render = (container, child, place) => {
   }
 };
 
+export const renderTemplate = (container, template, place = RenderPosition.BEFOREEND) => {
+  if (container instanceof Abstract) {
+    container = container.getElement();
+  }
+
+  container.insertAdjacentHTML(place, template);
+};
+
 export const createElement = (template) => {
   const newElement = document.createElement(`div`);
   newElement.innerHTML = template;
 
-  return newElement.firstChild;
+  return newElement.firstElementChild;
+};
+
+export const replace = (oldElement, newElement) => {
+  if (oldElement instanceof Abstract) {
+    oldElement = oldElement.getElement();
+  }
+
+  if (newElement instanceof Abstract) {
+    newElement = newElement.getElement();
+  }
+
+  if (oldElement === null || newElement === null) {
+    throw new Error(`Can't replace unexisting elements`);
+  }
+
+  oldElement.replaceWith(newElement);
+};
+
+export const remove = (component) => {
+  if (!(component instanceof Abstract)) {
+    throw new Error(`Can remove only components`);
+  }
+
+  component.getElement().remove();
+  component.removeElement();
 };
