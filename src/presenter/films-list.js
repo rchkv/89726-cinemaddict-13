@@ -9,8 +9,7 @@ import ShowMoreButtonView from "../view/show-more-button.js";
 import SortView from "../view/sort.js";
 import {RenderPosition, render, remove} from "../utils/render.js";
 import {updateItem} from "../utils/common.js";
-import {sortByRating, sortByDate} from "../utils/sort.js";
-import {getMostCommentedFilms, getTopRatedFilms} from "../mock/film.js";
+import {sortByRating, sortByDate, sortByCommentCount} from "../utils/sort.js";
 import {FilmsType, SortType} from "../const.js";
 
 const {AFTERBEGIN} = RenderPosition;
@@ -48,8 +47,8 @@ export default class MovieList {
   init(films) {
     this._films = films.slice();
     this._defaultFilms = films.slice();
-    this._topRatedFilms = getTopRatedFilms(films);
-    this._mostCommentedFilms = getMostCommentedFilms(films);
+    this._topRatedFilms = sortByRating(films);
+    this._mostCommentedFilms = sortByCommentCount(films);
     this._renderSort();
     render(this._filmListContainer, this._filmListComponent);
     this._renderMovieList();

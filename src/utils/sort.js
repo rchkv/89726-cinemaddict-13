@@ -11,3 +11,9 @@ export const sortByRating = (films) => {
     return b.rating - a.rating;
   });
 };
+
+export const sortByCommentCount = (films) => {
+  return films.slice().sort((a, b) => {
+    return b.comments.length - a.comments.length;
+  });
+};

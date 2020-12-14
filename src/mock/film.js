@@ -126,15 +126,3 @@ const generateFilm = () => {
 export const generateFilms = (count) => {
   return new Array(count).fill().map(generateFilm);
 };
-
-export const getTopRatedFilms = (films) => {
-  return films.slice().sort((a, b) => {
-    return b.rating - a.rating;
-  });
-};
-
-export const getMostCommentedFilms = (films) => {
-  return films.slice().sort((a, b) => {
-    return b.comments.length - a.comments.length;
-  });
-};
