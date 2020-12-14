@@ -6,13 +6,16 @@ import TopRatedFilmsView from "../view/top-rated-films.js";
 import MostCommentedFilmsView from "../view/most-commented-films.js";
 import FilmsListView from "../view/films-list.js";
 import ShowMoreButtonView from "../view/show-more-button.js";
+import SortView from "../view/sort.js";
 import {RenderPosition, render, remove} from "../utils/render.js";
 import {updateItem} from "../utils/common.js";
+import {sortByRating, sortByDate} from "../utils/sort.js";
 import {getMostCommentedFilms, getTopRatedFilms} from "../mock/film.js";
-import {FilmsType} from "../const.js";
+import {FilmsType, SortType} from "../const.js";
 
 const {AFTERBEGIN} = RenderPosition;
 const {ALL, RATED, COMMENTED} = FilmsType;
+const {DEFAULT, DATE, RATING} = SortType;
 const EXTRA_FILM_COUNT = 2;
 const FILMS_COUNT_PER_STEP = 5;
 
@@ -23,6 +26,7 @@ export default class MovieList {
     this._allFilmPresenter = {};
     this._ratedFilmPresenter = {};
     this._commentedFilmPresenter = {};
+    this._currentSortType = DEFAULT;
 
     this._filmListComponent = new FilmsView();
     this._noFilmsComponent = new NoFilmsView();
@@ -33,10 +37,12 @@ export default class MovieList {
     this._topRatedListComponent = new FilmsListView();
     this._mostCommentedListComponent = new FilmsListView();
     this._showButtonComponent = new ShowMoreButtonView();
+    this._sortComponent = new SortView();
 
     this._handleFilmCardChange = this._handleFilmCardChange.bind(this);
     this._handleModeChange = this._handleModeChange.bind(this);
     this._handleShowButtonClick = this._handleShowButtonClick.bind(this);
+    this._handleSortChange = this._handleSortChange.bind(this);
   }
 
   init(films) {
@@ -44,6 +50,7 @@ export default class MovieList {
     this._defaultFilms = films.slice();
     this._topRatedFilms = getTopRatedFilms(films);
     this._mostCommentedFilms = getMostCommentedFilms(films);
+    this._renderSort();
     render(this._filmListContainer, this._filmListComponent);
     this._renderMovieList();
   }
@@ -144,6 +151,34 @@ export default class MovieList {
   _renderMostCommented() {
     this._renderMostCommentedList();
     render(this._filmListComponent, this._mostCommentedComponent);
+  }
+
+  _sortFilms(sortType) {
+    switch (sortType) {
+      case DATE:
+        sortByDate(this._films);
+        break;
+      case RATING:
+        sortByRating(this._films);
+        break;
+      default:
+        this._films = this._defaultFilms.slice();
+    }
+    this._currentSortType = sortType;
+  }
+
+  _handleSortChange(sortType) {
+    if (this._currentSortType === sortType) {
+      return;
+    }
+    this._sortFilms(sortType);
+    this._clearAllMoviesList();
+    this._renderAllMoviesList();
+  }
+
+  _renderSort() {
+    render(this._filmListContainer, this._sortComponent);
+    this._sortComponent.setSortTypeChangeHandler(this._handleSortChange);
   }
 
   _renderMovieList() {
