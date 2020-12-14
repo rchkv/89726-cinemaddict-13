@@ -18,7 +18,7 @@ const {DEFAULT, DATE, RATING} = SortType;
 const EXTRA_FILM_COUNT = 2;
 const FILMS_COUNT_PER_STEP = 5;
 
-export default class MovieList {
+export default class FilmsList {
   constructor(filmListContainer) {
     this._filmListContainer = filmListContainer;
     this._renderedFilmsCount = FILMS_COUNT_PER_STEP;
@@ -51,7 +51,7 @@ export default class MovieList {
     this._mostCommentedFilms = sortByCommentCount(films);
     this._renderSort();
     render(this._filmListContainer, this._filmListComponent);
-    this._renderMovieList();
+    this._renderFilmsList();
   }
 
   _handleModeChange() {
@@ -95,16 +95,16 @@ export default class MovieList {
     .forEach((film) => this._renderFilmCard(container, film, type));
   }
 
-  _renderNoMovies() {
+  _renderNoFilms() {
     render(this._filmListComponent, this._noFilmsComponent, AFTERBEGIN);
   }
 
-  _clearAllMoviesList() {
+  _clearAllFilmsList() {
     Object.values(this._allFilmPresenter).forEach((presenter) => presenter.destroy());
     this._renderedFilmsCount = FILMS_COUNT_PER_STEP;
   }
 
-  _renderAllMoviesList() {
+  _renderAllFilmsList() {
     this._renderFilmCards(this._allFilmsListComponent, this._films, 0, Math.min(this._films.length, FILMS_COUNT_PER_STEP), ALL);
     render(this._allFilmsComponent, this._allFilmsListComponent);
 
@@ -138,7 +138,7 @@ export default class MovieList {
   }
 
   _renderAllMovies() {
-    this._renderAllMoviesList();
+    this._renderAllFilmsList();
     render(this._filmListComponent, this._allFilmsComponent);
   }
 
@@ -171,8 +171,8 @@ export default class MovieList {
       return;
     }
     this._sortFilms(sortType);
-    this._clearAllMoviesList();
-    this._renderAllMoviesList();
+    this._clearAllFilmsList();
+    this._renderAllFilmsList();
   }
 
   _renderSort() {
@@ -180,9 +180,9 @@ export default class MovieList {
     this._sortComponent.setSortTypeChangeHandler(this._handleSortChange);
   }
 
-  _renderMovieList() {
+  _renderFilmsList() {
     if (this._films.length === 0) {
-      this._renderNoMovies();
+      this._renderNoFilms();
       return;
     }
 
