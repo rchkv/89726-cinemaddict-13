@@ -1,4 +1,5 @@
 import Abstract from "./abstract.js";
+import {formatDurationFromMinutes} from "../utils/common.js";
 import dayjs from "dayjs";
 
 const createFilmCardTemplate = (film) => {
@@ -14,7 +15,7 @@ const createFilmCardTemplate = (film) => {
     <p class="film-card__rating">${rating}</p>
     <p class="film-card__info">
       <span class="film-card__year">${dayjs(releaseDate).format(`YYYY`)}</span>
-      <span class="film-card__duration">${duration}</span>
+      <span class="film-card__duration">${formatDurationFromMinutes(duration)}</span>
       <span class="film-card__genre">${genres[0]}</span>
     </p>
     <img src="${poster}" alt="" class="film-card__poster">

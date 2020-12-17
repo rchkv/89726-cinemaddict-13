@@ -1,3 +1,7 @@
+import dayjs from "dayjs";
+let durationPlugin = require(`dayjs/plugin/duration`);
+dayjs.extend(durationPlugin);
+
 export const getRandomInt = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -43,4 +47,8 @@ export const updateItem = (items, updatedItem) => {
   }
 
   return [...items.slice(0, index), updatedItem, ...items.slice(index + 1)];
+};
+
+export const formatDurationFromMinutes = (duration) => {
+  return dayjs.duration(duration, `minutes`).format(`H[h] mm[m]`);
 };

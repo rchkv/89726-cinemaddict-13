@@ -90,13 +90,6 @@ const generateReleaseDate = (start, end) => {
   return dayjs(generateRandomDate(start, end)).format(`DD MMMM YYYY`);
 };
 
-const generateDuration = () => {
-  return dayjs()
-    .hour(getRandomInt(0, 5))
-    .minute(getRandomInt(0, 59))
-    .format(`H[h] mm[m]`);
-};
-
 const generateFilm = () => {
   const commentsCount = getRandomInt(0, MAX_COMMENTS);
 
@@ -110,7 +103,7 @@ const generateFilm = () => {
     writers: generateUniqueCompilation(writers, FilmWritersCount),
     actors: generateUniqueCompilation(actors, FilmActorsCount),
     releaseDate: generateReleaseDate(new Date(1950, 0, 1), new Date()),
-    duration: generateDuration(),
+    duration: getRandomInt(1, 180),
     country: getRandomValue(countries),
     genres: generateUniqueCompilation(genres, FilmGenresCount),
     shortDescription: generateFullDescription(false),
