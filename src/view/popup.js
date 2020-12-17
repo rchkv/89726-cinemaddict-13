@@ -1,5 +1,6 @@
 import SmartView from "./smart.js";
 import {createCommentsTemplate} from "./comments.js";
+import {formatDurationFromMinutes} from "../utils/common.js";
 
 const createGenresTemplate = (genres) => {
 
@@ -43,7 +44,7 @@ const createFilmDetailsTemplate = (film) => {
   </tr>
   <tr class="film-details__row">
     <td class="film-details__term">Runtime</td>
-    <td class="film-details__cell">${duration}</td>
+    <td class="film-details__cell">${formatDurationFromMinutes(duration)}</td>
   </tr>
   <tr class="film-details__row">
     <td class="film-details__term">Country</td>
