@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-let durationPlugin = require(`dayjs/plugin/duration`);
+import durationPlugin from "dayjs/plugin/duration";
 dayjs.extend(durationPlugin);
 
 export const getRandomInt = (a = 0, b = 1) => {
