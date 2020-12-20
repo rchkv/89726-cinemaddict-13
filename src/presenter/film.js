@@ -28,7 +28,6 @@ export default class Film {
     this._handleFilmDetailsClick = this._handleFilmDetailsClick.bind(this);
     this._handleControlsChange = this._handleControlsChange.bind(this);
     this._handleCloseButtonClick = this._handleCloseButtonClick.bind(this);
-    // this._handleModelCommentsEvent = this._handleModelCommentsEvent.bind(this);
     this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
     this._handleToggleChange = this._handleToggleChange.bind(this);
 
