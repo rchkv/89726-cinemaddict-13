@@ -43,7 +43,7 @@ export default class Film {
     this._isPopUpReOpened = false;
 
     this._filmCardComponent = new FilmCardView(film);
-    this._popUpComponent = new PopUpView(film, this._emoji, this._handlePopUpCommentsRender);
+    this._popUpComponent = new PopUpView(film, this._handlePopUpCommentsRender);
 
     this._filmCardComponent.setFilmDetailsClickHandler(this._handleFilmDetailsClick);
     this._filmCardComponent.setControlsClickHandler(this._handleControlsChange);
