@@ -37,18 +37,27 @@ export default class Film {
 
   init(film) {
     this._film = film;
+    this._emoji = null;
+    this._newComment = null;
 
     const prevFilmCardComponent = this._filmCardComponent;
     const prevPopUpComponent = this._popUpComponent;
+
     this._isPopUpReOpened = false;
 
+    if (prevPopUpComponent) {
+      this._emoji = prevPopUpComponent.restoreEmoji();
+      this._newComment = prevPopUpComponent.restoreNewComment();
+    }
+
     this._filmCardComponent = new FilmCardView(film);
-    this._popUpComponent = new PopUpView(film, this._handlePopUpCommentsRender);
+    this._popUpComponent = new PopUpView(film, this._emoji, this._newComment, this._handlePopUpCommentsRender);
 
     this._filmCardComponent.setFilmDetailsClickHandler(this._handleFilmDetailsClick);
     this._filmCardComponent.setControlsClickHandler(this._handleControlsChange);
     this._popUpComponent.setControlsToggleHandler(this._handleToggleChange);
     this._popUpComponent.setCloseButtonClickHandler(this._handleCloseButtonClick);
+    this._popUpComponent.setSubmitCommentHandler(this._handleShortcutKeysDown);
 
     if (prevFilmCardComponent === null || prevPopUpComponent === null) {
       render(this._filmContainer, this._filmCardComponent);
@@ -83,7 +92,6 @@ export default class Film {
     if (this._isPopUpReOpened) {
       this._popUpComponent.restoreHandlers();
     }
-    this._popUpComponent.setSubmitCommentHandler(this._handleShortcutKeysDown);
     document.addEventListener(`keydown`, this._escKeyDownHandler);
     this._changeMode();
     this._mode = POPUP;
@@ -93,7 +101,6 @@ export default class Film {
     this._isPopUpReOpened = true;
     this._popUpComponent.reset(this._film);
     remove(this._popUpComponent);
-    this._popUpComponent.removeSubmitCommentHandler(this._handleShortcutKeysDown);
     document.removeEventListener(`keydown`, this._escKeyDownHandler);
     this._mode = DEFAULT;
     this._changeFilm(UPDATE_FILM, MINOR, this._film);
