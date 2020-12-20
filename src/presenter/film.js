@@ -1,21 +1,21 @@
 import FilmCardView from "../view/film-card.js";
 import PopUpView from "../view/popup.js";
 import {render, replace, remove} from "../utils/render.js";
+import {Mode, UserAction, UpdateType} from "../const.js";
 
 const body = document.querySelector(`body`);
-const Mode = {
-  DEFAULT: `DEFAULT`,
-  POPUP: `POPUP`
-};
 
 const {DEFAULT, POPUP} = Mode;
+const {UPDATE_FILM, ADD, DELETE} = UserAction;
+const {MINOR} = UpdateType;
 
 export default class Film {
-  constructor(filmContainer, changeFilm, changeMode) {
+  constructor(filmContainer, changeFilm, changeMode, commentsModel) {
     this._filmContainer = filmContainer;
     this._popUpContainer = body;
     this._changeFilm = changeFilm;
     this._changeMode = changeMode;
+    this._commentsModel = commentsModel;
 
     this._filmCardComponent = null;
     this._popUpComponent = null;
@@ -24,7 +24,10 @@ export default class Film {
     this._handleFilmDetailsClick = this._handleFilmDetailsClick.bind(this);
     this._handleControlsChange = this._handleControlsChange.bind(this);
     this._handleCloseButtonClick = this._handleCloseButtonClick.bind(this);
+    this._handleModelCommentsEvent = this._handleModelCommentsEvent.bind(this);
     this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
+
+    this._commentsModel.addObserver(this._handleModelCommentsEvent);
   }
 
   init(film) {
@@ -89,7 +92,7 @@ export default class Film {
   }
 
   _handleControlsChange(film) {
-    this._changeFilm(film);
+    this._changeFilm(UPDATE_FILM, film, MINOR);
   }
 
   _handleFilmDetailsClick() {
@@ -104,6 +107,13 @@ export default class Film {
     if (evt.key === `Escape` || evt.key === `Esc`) {
       evt.preventDefault();
       this._closePopUp();
+    }
+  }
+
+  _handleModelCommentsEvent(filmID) {
+    if (this._film.id === filmID) {
+      this._film.comments = this._commentsModel.getComments()[filmID];
+      this._changeFilm(UPDATE_FILM, this._film, MINOR);
     }
   }
 }

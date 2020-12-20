@@ -52,3 +52,7 @@ export const updateItem = (items, updatedItem) => {
 export const formatDurationFromMinutes = (duration) => {
   return dayjs.duration(duration, `minutes`).format(`H[h] mm[m]`);
 };
+
+export const generateID = () => {
+  return Date.now() + parseInt(Math.random() * 10000, 10);
+};

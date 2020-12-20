@@ -1,5 +1,12 @@
 import dayjs from "dayjs";
-import {getRandomInt, getRandomFloat, generateRandomDate, getRandomBoolean, getRandomValue, generateUniqueCompilation} from "../utils/common.js";
+import {
+  getRandomInt,
+  getRandomFloat,
+  generateRandomDate,
+  getRandomBoolean,
+  getRandomValue,
+  generateUniqueCompilation,
+  generateID} from "../utils/common.js";
 import {generateComments} from "./comment.js";
 
 const MAX_COMMENTS = 5;
@@ -80,10 +87,6 @@ const FilmActorsCount = {
 const FilmGenresCount = {
   MIN: 1,
   MAX: 3
-};
-
-const generateID = () => {
-  return Date.now() + parseInt(Math.random() * 10000, 10);
 };
 
 const generateReleaseDate = (start, end) => {
