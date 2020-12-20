@@ -17,19 +17,19 @@ export default class Comments extends Observer {
     return this._comments;
   }
 
-  addComment(newComment, filmID) {
-    this._comments[filmID] = [newComment, ...this._comments[filmID]];
-    this._notify(filmID);
+  addComment(updateType, newComment, filmID) {
+    this._comments[filmID] = [...this._comments[filmID], newComment];
+    this._notify(updateType, newComment, filmID);
   }
 
-  deleteComment(deletedComment, filmID) {
+  deleteComment(updateType, deletedComment, filmID) {
     const index = this._comments[filmID].findIndex((comment) => comment.id === deletedComment.id);
 
     if (index === -1) {
       throw new Error(`Can't delete unexisting comment`);
     }
 
-    this._comments[filmID] = [...this._comments[filmID].slice(0, index), ...this._comments[filmID].slice(index + 1)]
-    this._notify(filmID);
+    this._comments[filmID] = [...this._comments[filmID].slice(0, index), ...this._comments[filmID].slice(index + 1)];
+    this._notify(updateType, deletedComment, filmID);
   }
 }

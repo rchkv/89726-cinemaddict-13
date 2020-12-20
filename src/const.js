@@ -29,6 +29,14 @@ export const UserAction = {
 };
 
 export const UpdateType = {
+  PATCH: `PATCH`,
   MINOR: `MINOR`,
   MAJOR: `MAJOR`
+};
+
+export const FilterType = {
+  ALL: `allmovies`,
+  WATCHLIST: `watchlist`,
+  HISTORY: `history`,
+  FAVORITES: `favorites`
 };
