@@ -9,7 +9,7 @@ import ShowMoreButtonView from "../view/show-more-button.js";
 import SortView from "../view/sort.js";
 import {RenderPosition, render, remove} from "../utils/render.js";
 import {filterRules} from "../utils/filter.js";
-import {sortByRating, sortByDate, sortByCommentCount} from "../utils/sort.js";
+import {sortByRating, sortByDate} from "../utils/sort.js";
 import {FilmsType, SortType, UserAction, UpdateType} from "../const.js";
 
 const {AFTERBEGIN, BEFOREEND} = RenderPosition;
@@ -40,7 +40,6 @@ export default class FilmsList {
     this._allFilmsListComponent = new FilmsListView();
     this._topRatedListComponent = new FilmsListView();
     this._mostCommentedListComponent = new FilmsListView();
-    // this._sortComponent = new SortView();
     this._showButtonComponent = null;
     this._sortComponent = null;
 
@@ -55,7 +54,6 @@ export default class FilmsList {
   }
 
   init() {
-    // this._renderSort();
     render(this._filmListContainer, this._filmListComponent);
     this._renderFilmsList();
   }
@@ -172,7 +170,7 @@ export default class FilmsList {
 
   _handleShowButtonClick() {
     const filmCount = this._getFilms().length;
-    const newRenderedFilmCount = Math.min(filmCount, this._renderedFilmsCount += FILMS_COUNT_PER_STEP);
+    const newRenderedFilmCount = Math.min(filmCount, this._renderedFilmsCount + FILMS_COUNT_PER_STEP);
     const films = this._getFilms().slice(this._renderedFilmsCount, newRenderedFilmCount);
 
     this._renderFilmCards(this._allFilmsListComponent, films, ALL);

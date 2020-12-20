@@ -1,5 +1,4 @@
 import ProfileView from "./view/profile-rating.js";
-// import NavigationMenuView from "./view/navigation.js";
 import FooterView from "./view/footer-statistics.js";
 import FilmListPresenter from "./presenter/films-list.js";
 import NavigationPresenter from "./presenter/navigation.js";
@@ -12,7 +11,6 @@ import FilterModel from "./model/filter.js";
 const FILM_COUNT = 19;
 
 const films = generateFilms(FILM_COUNT);
-// const filters = generateFilters(films);
 const total = films.length;
 
 const filmModel = new FilmModel();
@@ -28,7 +26,6 @@ const filmListPresenter = new FilmListPresenter(main, filmModel, commentsModel, 
 const navigationPresenter = new NavigationPresenter(main, filterModel, filmModel);
 
 render(header, new ProfileView(films));
-// render(main, new NavigationMenuView(filters), RenderPosition.AFTERBEGIN);
 filmListPresenter.init();
 navigationPresenter.init();
 render(footer.lastElementChild, new FooterView(total));
