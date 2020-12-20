@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
 import durationPlugin from "dayjs/plugin/duration";
+import {FirstNames, LastNames} from "../const.js";
+
 dayjs.extend(durationPlugin);
 
 export const getRandomInt = (a = 0, b = 1) => {
@@ -55,4 +57,8 @@ export const formatDurationFromMinutes = (duration) => {
 
 export const generateID = () => {
   return Date.now() + parseInt(Math.random() * 10000, 10);
+};
+
+export const generateRandomName = () => {
+  return `${getRandomValue(FirstNames)} ${getRandomValue(LastNames)}`;
 };

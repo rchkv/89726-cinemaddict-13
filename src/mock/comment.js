@@ -1,16 +1,12 @@
 import dayjs from "dayjs";
-import {getRandomInt, getRandomValue, generateRandomDate, generateID} from "../utils/common.js";
+import {getRandomInt,
+  getRandomValue,
+  generateRandomDate,
+  generateID,
+  generateRandomName} from "../utils/common.js";
 import {EMOJIS} from "../const.js";
 
 const comments = [`Interesting film`, `Very bad`, `Boring`];
-
-const firstNames = [`Michael`, `Stewart`, `Paul`];
-
-const lastNames = [`Ballack`, `Downing`, `Scholes`];
-
-const generateRandomName = () => {
-  return `${getRandomValue(firstNames)} ${getRandomValue(lastNames)}`;
-};
 
 const generateDate = (start, end) => {
   return dayjs(generateRandomDate(start, end))

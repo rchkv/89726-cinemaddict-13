@@ -94,11 +94,19 @@ export default class FilmsList {
     }
   }
 
-
-
-  // ToDo доделать
-  _handleModelEvent(updateType) {
+  _handleModelEvent(updateType, updatedFilm) {
     switch (updateType) {
+      case PATCH:
+        if (this._allFilmPresenter[updatedFilm.id]) {
+          this._allFilmPresenter[updatedFilm.id].init(updatedFilm);
+        }
+        if (this._ratedFilmPresenter[updatedFilm.id]) {
+          this._ratedFilmPresenter[updatedFilm.id].init(updatedFilm);
+        }
+        if (this._commentedFilmPresenter[updatedFilm.id]) {
+          this._commentedFilmPresenter[updatedFilm.id].init(updatedFilm);
+        }
+        break;
       case MINOR:
         this._clearAllFilmsList();
         this._renderFilmsList();
@@ -206,12 +214,18 @@ export default class FilmsList {
     }
     this._currentSortType = sortType;
     this._clearAllFilmsList({resetAllMoviesOnly: true, resetRenderedFilmsCount: true});
+    this._renderSort();
     this._renderAllFilmsList();
   }
 
   _renderSort() {
-    render(this._filmListContainer, this._sortComponent);
+    if (this._sortComponent !== null) {
+      this._sortComponent = null;
+    }
+
+    this._sortComponent = new SortView(this._currentSortType);
     this._sortComponent.setSortTypeChangeHandler(this._handleSortChange);
+    render(this._filmListContainer, this._sortComponent, BEFOREEND, this._filmListComponent);
   }
 
   _clearAllFilmsList({resetAllMoviesOnly = false, resetRenderedFilmsCount = false, resetSortType = false} = {}) {

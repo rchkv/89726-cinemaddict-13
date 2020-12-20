@@ -1,11 +1,10 @@
 import ProfileView from "./view/profile-rating.js";
-import NavigationMenuView from "./view/menu.js";
+// import NavigationMenuView from "./view/navigation.js";
 import FooterView from "./view/footer-statistics.js";
 import FilmListPresenter from "./presenter/films-list.js";
 import NavigationPresenter from "./presenter/navigation.js";
-import {RenderPosition, render} from "./utils/render.js";
+import {render} from "./utils/render.js";
 import {generateFilms} from "./mock/film.js";
-import {generateFilters} from "./mock/filter.js";
 import FilmModel from "./model/movies.js";
 import CommentsModel from "./model/comments.js";
 import FilterModel from "./model/filter.js";

@@ -1,4 +1,4 @@
-import CommentView from "../view/comments.js";
+import CommentView from "../view/comment.js";
 import {render, replace, remove} from "../utils/render.js";
 import {UserAction, UpdateType} from "../const.js";
 

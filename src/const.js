@@ -40,3 +40,7 @@ export const FilterType = {
   HISTORY: `history`,
   FAVORITES: `favorites`
 };
+
+export const FirstNames = [`Michael`, `Stewart`, `Paul`];
+
+export const LastNames = [`Ballack`, `Downing`, `Scholes`];
