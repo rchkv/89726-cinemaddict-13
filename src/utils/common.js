@@ -30,7 +30,7 @@ export const generateRandomDate = (start, end) => {
 };
 
 export const generateUniqueCompilation = (items, limits) => {
-  const { MIN, MAX } = limits;
+  const {MIN, MAX} = limits;
   const count = getRandomInt(MIN, MAX);
   const uniqueValues = new Set();
 
