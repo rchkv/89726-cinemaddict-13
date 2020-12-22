@@ -30,7 +30,7 @@ export const generateRandomDate = (start, end) => {
 };
 
 export const generateUniqueCompilation = (items, limits) => {
-  const {MIN, MAX} = limits;
+  const { MIN, MAX } = limits;
   const count = getRandomInt(MIN, MAX);
   const uniqueValues = new Set();
 
@@ -61,4 +61,13 @@ export const generateID = () => {
 
 export const generateRandomName = () => {
   return `${getRandomValue(FirstNames)} ${getRandomValue(LastNames)}`;
+};
+
+export const generateCommentDate = (now = false) => {
+  return now
+    ? dayjs().format(`YYYY/M/DD H:mm`)
+    : dayjs(generateRandomDate(new Date(2020, 0, 1), new Date()))
+        .hour(getRandomInt(0, 23))
+        .minute(getRandomInt(0, 59))
+        .format(`YYYY/M/DD H:mm`);
 };
