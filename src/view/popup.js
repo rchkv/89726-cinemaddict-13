@@ -200,7 +200,7 @@ export default class PopUp extends SmartView {
 
     this._comment = {
       id: generateID(),
-      emoji: `./images/emoji/${this._emoji.emojiName}.png`,
+      emoji: this._emoji.emojiName,
       text: this._newComment.text,
       author: generateRandomName(),
       day: new Date()
