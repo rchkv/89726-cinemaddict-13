@@ -1,9 +1,4 @@
-export const EMOJIS = [
-  `./images/emoji/smile.png`,
-  `./images/emoji/sleeping.png`,
-  `./images/emoji/puke.png`,
-  `./images/emoji/angry.png`
-];
+export const EMOJIS = [`smile`, `sleeping`, `puke`, `angry`];
 
 export const FilmsType = {
   ALL: `all`,

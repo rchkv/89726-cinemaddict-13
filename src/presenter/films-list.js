@@ -48,9 +48,12 @@ export default class FilmsList {
     this._handleModeChange = this._handleModeChange.bind(this);
     this._handleShowButtonClick = this._handleShowButtonClick.bind(this);
     this._handleSortChange = this._handleSortChange.bind(this);
+    this._handleCommentsViewAction = this._handleCommentsViewAction.bind(this);
+    this._handleCommentsModelEvent = this._handleCommentsModelEvent.bind(this);
 
     this._filmsModel.addObserver(this._handleModelEvent);
     this._filterModel.addObserver(this._handleModelEvent);
+    this._commentsModel.addObserver(this._handleCommentsModelEvent);
   }
 
   init() {
@@ -84,12 +87,27 @@ export default class FilmsList {
         this._filmsModel.updateFilm(updateType, updatedData);
         break;
       case ADD:
-        this._commentsModel.addComment(updateType, updatedData, filmID);
+        this._filmsModel.addComment(updateType, updatedData, filmID);
         break;
       case DELETE:
-        this._commentsModel.deleteComment(updateType, updatedData, filmID);
+        this._filmsModel.deleteComment(updateType, updatedData, filmID);
         break;
     }
+  }
+
+  _handleCommentsViewAction(actionType, updatedData, filmID) {
+    switch (actionType) {
+      case ADD:
+        this._commentsModel.addComment(actionType, updatedData, filmID);
+        break;
+      case DELETE:
+        this._commentsModel.deleteComment(actionType, updatedData, filmID);
+        break;
+    }
+  }
+
+  _handleCommentsModelEvent(actionType, updatedComment, filmID) {
+    this._handleViewAction(actionType, PATCH, updatedComment, filmID);
   }
 
   _handleModelEvent(updateType, updatedFilm) {
@@ -117,7 +135,7 @@ export default class FilmsList {
   }
 
   _renderFilmCard(container, film, type) {
-    const filmPresenter = new FilmPresenter(container, this._handleViewAction, this._handleModeChange, this._commentsModel);
+    const filmPresenter = new FilmPresenter(container, this._handleViewAction, this._handleCommentsViewAction, this._handleModeChange, this._commentsModel);
     filmPresenter.init(film);
     switch (type) {
       case ALL:

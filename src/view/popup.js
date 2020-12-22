@@ -165,7 +165,8 @@ export default class PopUp extends SmartView {
 
   _emojiToggleHandler(evt) {
     evt.preventDefault();
-    this.updateData({isEmoji: true, emojiName: evt.target.value});
+    this._emoji = {isEmoji: true, emojiName: evt.target.value};
+    this.updateData(this._emoji);
   }
 
   _setInnerHandlers() {

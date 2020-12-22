@@ -17,12 +17,12 @@ export default class Comments extends Observer {
     return this._comments;
   }
 
-  addComment(updateType, newComment, filmID) {
+  addComment(actionType, newComment, filmID) {
     this._comments[filmID] = [...this._comments[filmID], newComment];
-    this._notify(updateType, newComment, filmID);
+    this._notify(actionType, newComment, filmID);
   }
 
-  deleteComment(updateType, deletedComment, filmID) {
+  deleteComment(actionType, deletedComment, filmID) {
     const index = this._comments[filmID].findIndex((comment) => comment.id === deletedComment.id);
 
     if (index === -1) {
@@ -30,6 +30,6 @@ export default class Comments extends Observer {
     }
 
     this._comments[filmID] = [...this._comments[filmID].slice(0, index), ...this._comments[filmID].slice(index + 1)];
-    this._notify(updateType, deletedComment, filmID);
+    this._notify(actionType, deletedComment, filmID);
   }
 }

@@ -7,22 +7,22 @@ import CommentPresenter from "../presenter/comment.js";
 const body = document.querySelector(`body`);
 
 const {DEFAULT, POPUP} = Mode;
-const {UPDATE_FILM, ADD, DELETE} = UserAction;
+const {UPDATE_FILM, ADD} = UserAction;
 const {PATCH, MINOR} = UpdateType;
 
 export default class Film {
-  constructor(filmContainer, changeFilm, changeMode, commentsModel) {
+  constructor(filmContainer, changeFilm, changeComment, changeMode, commentsModel) {
     this._filmContainer = filmContainer;
     this._popUpContainer = body;
     this._changeFilm = changeFilm;
     this._changeMode = changeMode;
+    this._changeComment = changeComment;
     this._commentsModel = commentsModel;
 
     this._filmCardComponent = null;
     this._popUpComponent = null;
     this._mode = DEFAULT;
 
-    this._handleModelCommentsUpdate = this._handleModelCommentsUpdate.bind(this);
     this._handlePopUpCommentsRender = this._handlePopUpCommentsRender.bind(this);
     this._handleShortcutKeysDown = this._handleShortcutKeysDown.bind(this);
     this._handleFilmDetailsClick = this._handleFilmDetailsClick.bind(this);
@@ -31,7 +31,6 @@ export default class Film {
     this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
     this._handleToggleChange = this._handleToggleChange.bind(this);
 
-    this._commentsModel.addObserver(this._handleModelCommentsUpdate);
   }
 
   init(film) {
@@ -128,30 +127,16 @@ export default class Film {
     }
   }
 
-  _handleModelCommentsUpdate(updateType, updatedComment, filmID) {
-    if (this._film.id === filmID) {
-      switch (updateType) {
-        case ADD:
-          this._film.comments = Array.from(new Set([...this._film.comments, updatedComment]));
-          break;
-        case DELETE:
-          this._film.comments = this._film.comments.filter((comment) => comment.id !== updatedComment.id);
-          break;
-      }
-      this._changeFilm(UPDATE_FILM, PATCH, this._film);
-    }
-  }
-
   _handlePopUpCommentsRender(container) {
     const comments = this._commentsModel.getComments()[this._film.id];
-    const commentPresenter = new CommentPresenter(container, this._film.id, this._changeFilm);
+    const commentPresenter = new CommentPresenter(container, this._film.id, this._changeComment);
     comments.forEach((comment) => commentPresenter.init(comment));
   }
 
   _handleShortcutKeysDown(container, newComment) {
-    const newCommentPresenter = new CommentPresenter(container, this._film.id, this._changeFilm);
+    const newCommentPresenter = new CommentPresenter(container, this._film.id, this._changeComment);
     newCommentPresenter.init(newComment);
-    this._changeFilm(ADD, ADD, newComment, this._film.id);
+    this._changeComment(ADD, newComment, this._film.id);
     this._popUpComponent.reset(this._film);
   }
 }

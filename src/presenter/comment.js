@@ -26,7 +26,7 @@ export default class Comment {
   }
 
   _handleDeleteClick(comment) {
-    this._changeComment(DELETE, DELETE, comment, this._filmID);
+    this._changeComment(DELETE, comment, this._filmID);
     this.destroy();
   }
 }
