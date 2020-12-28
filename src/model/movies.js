@@ -27,7 +27,7 @@ export default class Films extends Observer {
       ...this._films.slice(index + 1)
     ];
 
-    this._notify(updatedFilm, updateType);
+    this._notify(updateType, updatedFilm);
   }
 
   addComment(updateType, newComment, filmID) {

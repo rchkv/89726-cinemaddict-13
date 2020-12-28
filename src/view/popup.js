@@ -193,6 +193,10 @@ export default class PopUp extends SmartView {
     return this._newComment;
   }
 
+  restoreEmoji() {
+    return this._emoji;
+  }
+
   _createComment() {
     if (!this._emoji.emojiName || !this._newComment.text) {
       throw new Error(`Can't create comment`);
