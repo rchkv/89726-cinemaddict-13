@@ -12,7 +12,7 @@ import {filterRules} from "../utils/filter.js";
 import {sortByRating, sortByDate} from "../utils/sort.js";
 import {FilmsType, SortType, UserAction, UpdateType} from "../const.js";
 
-const {AFTERBEGIN, BEFOREEND} = RenderPosition;
+const {AFTERBEGIN, BEFOREEND, BEFORE} = RenderPosition;
 const {ALL, RATED, COMMENTED} = FilmsType;
 const {DEFAULT, DATE, RATING} = SortType;
 const {UPDATE_FILM, ADD_COMMENT, DELETE_COMMENT} = UserAction;
@@ -32,7 +32,11 @@ export default class FilmsList {
     this._commentedFilmPresenter = {};
     this._currentSortType = DEFAULT;
 
+    this._showButtonComponent = null;
+    this._sortComponent = null;
+
     this._filmListComponent = new FilmsView();
+    this._sortComponent = new SortView();
     this._noFilmsComponent = new NoFilmsView();
     this._allFilmsComponent = new AllFilmsView();
     this._topRatedComponent = new TopRatedFilmsView();
@@ -40,8 +44,6 @@ export default class FilmsList {
     this._allFilmsListComponent = new FilmsListView();
     this._topRatedListComponent = new FilmsListView();
     this._mostCommentedListComponent = new FilmsListView();
-    this._showButtonComponent = null;
-    this._sortComponent = null;
 
     this._handleViewAction = this._handleViewAction.bind(this);
     this._handleModelEvent = this._handleModelEvent.bind(this);
@@ -241,7 +243,7 @@ export default class FilmsList {
 
     this._sortComponent = new SortView(this._currentSortType);
     this._sortComponent.setSortTypeChangeHandler(this._handleSortChange);
-    render(this._filmListContainer, this._sortComponent, BEFOREEND, this._filmListComponent);
+    render(this._filmListContainer, this._sortComponent, BEFORE, this._filmListComponent);
   }
 
   _clearAllFilmsList({resetAllMoviesOnly = false, resetRenderedFilmsCount = false, resetSortType = false} = {}) {
@@ -253,6 +255,7 @@ export default class FilmsList {
       this._renderedFilmsCount = FILMS_COUNT_PER_STEP;
     }
 
+    remove(this._sortComponent);
     remove(this._showButtonComponent);
 
     if (resetAllMoviesOnly) {
@@ -278,6 +281,7 @@ export default class FilmsList {
       return;
     }
 
+    this._renderSort();
     this._renderAllMovies();
     this._renderTopRated();
     this._renderMostCommented();
