@@ -2,7 +2,7 @@ import CommentView from "../view/comment.js";
 import {render, remove} from "../utils/render.js";
 import {UserAction} from "../const.js";
 
-const {DELETE} = UserAction;
+const {DELETE_COMMENT} = UserAction;
 
 export default class Comment {
   constructor(commentsContainer, filmID, changeComment) {
@@ -26,7 +26,7 @@ export default class Comment {
   }
 
   _handleDeleteClick(comment) {
-    this._changeComment(DELETE, comment, this._filmID);
+    this._changeComment(DELETE_COMMENT, comment, this._filmID);
     this.destroy();
   }
 }

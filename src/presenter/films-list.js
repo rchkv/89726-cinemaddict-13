@@ -15,7 +15,7 @@ import {FilmsType, SortType, UserAction, UpdateType} from "../const.js";
 const {AFTERBEGIN, BEFOREEND} = RenderPosition;
 const {ALL, RATED, COMMENTED} = FilmsType;
 const {DEFAULT, DATE, RATING} = SortType;
-const {UPDATE_FILM, ADD, DELETE} = UserAction;
+const {UPDATE_FILM, ADD_COMMENT, DELETE_COMMENT} = UserAction;
 const {PATCH, MINOR, MAJOR} = UpdateType;
 const EXTRA_FILM_COUNT = 2;
 const FILMS_COUNT_PER_STEP = 5;
@@ -86,10 +86,10 @@ export default class FilmsList {
       case UPDATE_FILM:
         this._filmsModel.updateFilm(updateType, updatedData);
         break;
-      case ADD:
+      case ADD_COMMENT:
         this._filmsModel.addComment(updateType, updatedData, filmID);
         break;
-      case DELETE:
+      case DELETE_COMMENT:
         this._filmsModel.deleteComment(updateType, updatedData, filmID);
         break;
     }
@@ -97,10 +97,10 @@ export default class FilmsList {
 
   _handleCommentsViewAction(actionType, updatedData, filmID) {
     switch (actionType) {
-      case ADD:
+      case ADD_COMMENT:
         this._commentsModel.addComment(actionType, updatedData, filmID);
         break;
-      case DELETE:
+      case DELETE_COMMENT:
         this._commentsModel.deleteComment(actionType, updatedData, filmID);
         break;
     }

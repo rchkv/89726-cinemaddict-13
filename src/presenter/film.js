@@ -7,7 +7,7 @@ import CommentPresenter from "../presenter/comment.js";
 const body = document.querySelector(`body`);
 
 const {DEFAULT, POPUP} = Mode;
-const {UPDATE_FILM, ADD} = UserAction;
+const {UPDATE_FILM, ADD_COMMENT} = UserAction;
 const {PATCH, MINOR} = UpdateType;
 
 export default class Film {
@@ -136,7 +136,7 @@ export default class Film {
   _handleShortcutKeysDown(container, newComment) {
     const newCommentPresenter = new CommentPresenter(container, this._film.id, this._changeComment);
     newCommentPresenter.init(newComment);
-    this._changeComment(ADD, newComment, this._film.id);
+    this._changeComment(ADD_COMMENT, newComment, this._film.id);
     this._popUpComponent.reset(this._film);
   }
 }
