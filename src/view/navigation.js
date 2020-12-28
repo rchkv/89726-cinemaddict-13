@@ -27,19 +27,20 @@ export default class Menu extends Abstract {
   }
 
   getTemplate() {
-    return createMenuTemplate(this._filters);
+    return createMenuTemplate(this._filters, this._currentFilter);
   }
 
   _filterChangeHandler(evt) {
-    if (evt.target.tagName !== `A`) {
-      return;
+    const target = evt.target;
+    const filterButton = (target && target.closest(`a`)) ? target.closest(`a`) : null;
+    if (filterButton) {
+      evt.preventDefault();
+      this._callback.filterChange(filterButton.dataset.filterType);
     }
-    evt.preventDefault();
-    this._callback.filterChange(evt.target.dataset.filterType);
   }
 
   setFilterChangeHandler(callback) {
     this._callback.filterChange = callback;
-    this.getElement().addEventListener(`click`, this._filterChangeHandler);
+    this.getElement().querySelector(`.main-navigation__items`).addEventListener(`click`, this._filterChangeHandler);
   }
 }
