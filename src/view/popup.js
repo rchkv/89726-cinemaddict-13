@@ -116,7 +116,6 @@ export default class PopUp extends SmartView {
     this._controlsToggleHandler = this._controlsToggleHandler.bind(this);
     this._emojiToggleHandler = this._emojiToggleHandler.bind(this);
     this._shortcutKeysDownHandler = this._shortcutKeysDownHandler.bind(this);
-    this._commentsInputHandler = this._commentsInputHandler.bind(this);
 
     this._renderComments = renderComments;
 
@@ -171,7 +170,6 @@ export default class PopUp extends SmartView {
 
   _setInnerHandlers() {
     this.getElement().querySelector(`.film-details__emoji-list`).addEventListener(`change`, this._emojiToggleHandler);
-    this.getElement().querySelector(`.film-details__comment-input`).addEventListener(`input`, this._commentsInputHandler);
   }
 
   setCloseButtonClickHandler(callback) {
@@ -212,17 +210,13 @@ export default class PopUp extends SmartView {
   }
 
   _shortcutKeysDownHandler(evt) {
-    if (evt.ctrlKey || evt.metaKey && evt.key === `Enter`) {
+    if (evt.code === `Enter` && (evt.ctrlKey || evt.metaKey)) {
       evt.preventDefault();
+      this._newComment = {text: evt.target.value};
+      this.updateData(this._newComment, true);
       this._createComment();
       this._callback.submitComment(this._commentsContainer, this._comment);
     }
-  }
-
-  _commentsInputHandler(evt) {
-    evt.preventDefault();
-    this._newComment = {text: evt.target.value};
-    this.updateData(this._newComment, true);
   }
 
   setSubmitCommentHandler(callback) {
