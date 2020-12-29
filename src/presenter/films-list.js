@@ -12,7 +12,7 @@ import {filterRules} from "../utils/filter.js";
 import {sortByRating, sortByDate} from "../utils/sort.js";
 import {FilmsType, SortType, UserAction, UpdateType} from "../const.js";
 
-const {AFTERBEGIN, BEFOREEND, BEFORE} = RenderPosition;
+const {AFTERBEGIN, BEFORE} = RenderPosition;
 const {ALL, RATED, COMMENTED} = FilmsType;
 const {DEFAULT, DATE, RATING} = SortType;
 const {UPDATE_FILM, ADD_COMMENT, DELETE_COMMENT} = UserAction;
