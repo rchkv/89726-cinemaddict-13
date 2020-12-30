@@ -1,0 +1,46 @@
+import Abstract from "./abstract.js";
+import {FilterType} from "../const.js";
+const {ALL, WATCHLIST, HISTORY, FAVORITES} = FilterType;
+
+const createMenuTemplate = (filters, currentFilter) => {
+  const {watchlist, history, favorites} = filters;
+  return (
+    `<nav class="main-navigation">
+    <div class="main-navigation__items">
+      <a href="#all" class="main-navigation__item ${currentFilter === ALL ? ` main-navigation__item--active` : ``}" data-filter-type="${ALL}">All movies</a>
+      <a href="#watchlist" class="main-navigation__item ${currentFilter === WATCHLIST ? ` main-navigation__item--active` : ``}" data-filter-type="${WATCHLIST}"">Watchlist <span class="main-navigation__item-count">${watchlist}</span></a>
+      <a href="#history" class="main-navigation__item ${currentFilter === HISTORY ? ` main-navigation__item--active` : ``}" data-filter-type="${HISTORY}">History <span class="main-navigation__item-count">${history}</span></a>
+      <a href="#favorites" class="main-navigation__item ${currentFilter === FAVORITES ? ` main-navigation__item--active` : ``}" data-filter-type="${FAVORITES}">Favorites <span class="main-navigation__item-count">${favorites}</span></a>
+    </div>
+    <a href="#stats" class="main-navigation__additional">Stats</a>
+    </nav>`
+  );
+};
+
+export default class Menu extends Abstract {
+  constructor(filters, currentFilter) {
+    super();
+    this._filters = filters;
+    this._currentFilter = currentFilter;
+
+    this._filterChangeHandler = this._filterChangeHandler.bind(this);
+  }
+
+  getTemplate() {
+    return createMenuTemplate(this._filters, this._currentFilter);
+  }
+
+  _filterChangeHandler(evt) {
+    const target = evt.target;
+    const filterButton = (target && target.closest(`a`)) ? target.closest(`a`) : null;
+    if (filterButton) {
+      evt.preventDefault();
+      this._callback.filterChange(filterButton.dataset.filterType);
+    }
+  }
+
+  setFilterChangeHandler(callback) {
+    this._callback.filterChange = callback;
+    this.getElement().querySelector(`.main-navigation__items`).addEventListener(`click`, this._filterChangeHandler);
+  }
+}
