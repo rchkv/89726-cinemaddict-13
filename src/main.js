@@ -1,7 +1,7 @@
-import ProfileView from "./view/profile-rating.js";
 import FooterView from "./view/footer-statistics.js";
 import FilmListPresenter from "./presenter/films-list.js";
 import NavigationPresenter from "./presenter/navigation.js";
+import ProfilePresenter from "./presenter/profile.js";
 import {render} from "./utils/render.js";
 import {generateFilms} from "./mock/film.js";
 import FilmModel from "./model/movies.js";
@@ -22,10 +22,11 @@ commentsModel.setComments(films);
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer`);
+const profilePresenter = new ProfilePresenter(header, filmModel);
 const filmListPresenter = new FilmListPresenter(main, filmModel, commentsModel, filterModel);
-const navigationPresenter = new NavigationPresenter(main, filterModel, filmModel);
+const navigationPresenter = new NavigationPresenter(main, filterModel, filmModel, filmListPresenter);
 
-render(header, new ProfileView(films));
+profilePresenter.init();
 filmListPresenter.init();
 navigationPresenter.init();
 render(footer.lastElementChild, new FooterView(total));

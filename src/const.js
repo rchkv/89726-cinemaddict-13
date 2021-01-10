@@ -29,11 +29,17 @@ export const UpdateType = {
   MAJOR: `MAJOR`
 };
 
-export const FilterType = {
-  ALL: `allmovies`,
-  WATCHLIST: `watchlist`,
-  HISTORY: `history`,
-  FAVORITES: `favorites`
+export const NavigationMode = {
+  MOVIES: `MOVIES`,
+  STATISTICS: `STATISTICS`
+};
+
+export const MenuItem = {
+  ALL: `#all`,
+  WATCHLIST: `#watchlist`,
+  HISTORY: `#history`,
+  FAVORITES: `#favorites`,
+  STATS: `#stats`
 };
 
 export const FirstNames = [`Michael`, `Stewart`, `Paul`];
