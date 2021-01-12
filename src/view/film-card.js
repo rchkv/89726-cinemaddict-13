@@ -60,7 +60,7 @@ export default class FilmCard extends Abstract {
         this._callback.controlsClick(Object.assign({}, this._film, {isWatchList: !this._film.isWatchList}));
         break;
       case evt.target.classList.contains(`film-card__controls-item--mark-as-watched`):
-        this._callback.controlsClick(Object.assign({}, this._film, {isWatched: !this._film.isWatched}));
+        this._callback.controlsClick(Object.assign({}, this._film, {isWatched: !this._film.isWatched, watchedDate: new Date()}));
         break;
       case evt.target.classList.contains(`film-card__controls-item--favorite`):
         this._callback.controlsClick(Object.assign({}, this._film, {isFavorites: !this._film.isFavorites}));

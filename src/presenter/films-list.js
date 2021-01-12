@@ -63,6 +63,14 @@ export default class FilmsList {
     this._renderFilmsList();
   }
 
+  destroy() {
+    this._clearAllFilmsList({resetRenderedFilmsCount: true, resetSortType: true});
+    remove(this._filmListComponent);
+    this._filmsModel.removeObserver(this._handleModelEvent);
+    this._commentsModel.removeObserver(this._handleCommentsModelEvent);
+    this._filterModel.removeObserver(this._handleModelEvent);
+  }
+
   _getFilms() {
     const currentFilter = this._filterModel.getFilter();
     const films = this._filmsModel.getFilms();

@@ -120,5 +120,10 @@ const generateFilm = () => {
 };
 
 export const generateFilms = (count) => {
-  return new Array(count).fill().map(generateFilm);
+  const films = new Array(count).fill().map(generateFilm);
+
+  const filmsWithWatchedDates = films.map((film) =>
+    film.isWatched ? Object.assign({}, film, {watchedDate: generateRandomDate(new Date(2020, 0, 1), new Date())}) : film);
+
+  return filmsWithWatchedDates;
 };

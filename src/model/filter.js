@@ -1,7 +1,7 @@
 import Observer from "../utils/observer.js";
-import {FilterType} from "../const.js";
+import {MenuItem} from "../const.js";
 
-const {ALL} = FilterType;
+const {ALL} = MenuItem;
 
 export default class Filter extends Observer {
   constructor() {
