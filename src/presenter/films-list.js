@@ -52,15 +52,15 @@ export default class FilmsList {
     this._handleSortChange = this._handleSortChange.bind(this);
     this._handleCommentsViewAction = this._handleCommentsViewAction.bind(this);
     this._handleCommentsModelEvent = this._handleCommentsModelEvent.bind(this);
-
-    this._filmsModel.addObserver(this._handleModelEvent);
-    this._filterModel.addObserver(this._handleModelEvent);
-    this._commentsModel.addObserver(this._handleCommentsModelEvent);
   }
 
   init() {
     render(this._filmListContainer, this._filmListComponent);
     this._renderFilmsList();
+
+    this._filmsModel.addObserver(this._handleModelEvent);
+    this._filterModel.addObserver(this._handleModelEvent);
+    this._commentsModel.addObserver(this._handleCommentsModelEvent);
   }
 
   destroy() {
