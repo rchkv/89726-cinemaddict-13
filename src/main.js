@@ -13,7 +13,6 @@ import FilterModel from "./model/filter.js";
 // const FILM_COUNT = 19;
 
 // const films = generateFilms(FILM_COUNT);
-
 const {INIT} = UpdateType;
 const AUTHORIZATION = `Basic akjshdASjdsdjuSd`;
 const SERVER_NAME = `https://13.ecmascript.pages.academy/cinemaddict`;
@@ -32,19 +31,33 @@ const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer`);
 
 const profilePresenter = new ProfilePresenter(header, filmModel);
-const filmListPresenter = new FilmListPresenter(main, filmModel, commentsModel, filterModel);
+const filmListPresenter = new FilmListPresenter(main, filmModel, commentsModel, filterModel, api);
 const navigationPresenter = new NavigationPresenter(main, filterModel, filmModel, filmListPresenter);
 
-profilePresenter.init();
+// profilePresenter.init();
 filmListPresenter.init();
 navigationPresenter.init();
 // render(footer.lastElementChild, new FooterView(total)); ToDo пофиксить
 
+
+let films = [];
+
 api.getMovies()
   .then((movies) => {
-    FilmModel.setMovies(INIT, movies);
+    films = movies;
     return movies;
   })
   .then((movies) => movies.map((film) => api.getComments(film.id)))
   .then((comments) => Promise.all(comments))
-  .then((allcomments) => commentsModel.setComments(allcomments));
+  .then((allcomments) => {
+    commentsModel.setComments(allcomments);
+    filmModel.setFilms(INIT, films);
+    profilePresenter.init();
+    render(footer.lastElementChild, new FooterView(films.length));
+  })
+  .catch(() => {
+    commentsModel.setComments([]);
+    filterModel.setFilms(INIT, []);
+    profilePresenter.init();
+    render(footer.lastElementChild, new FooterView(films.length));
+  });

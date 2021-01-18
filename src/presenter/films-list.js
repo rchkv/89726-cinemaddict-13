@@ -22,7 +22,7 @@ const EXTRA_FILM_COUNT = 2;
 const FILMS_COUNT_PER_STEP = 5;
 
 export default class FilmsList {
-  constructor(filmListContainer, filmsModel, commentsModel, filterModel) {
+  constructor(filmListContainer, filmsModel, commentsModel, filterModel, api) {
     this._filmsModel = filmsModel;
     this._commentsModel = commentsModel;
     this._filterModel = filterModel;
@@ -33,6 +33,7 @@ export default class FilmsList {
     this._commentedFilmPresenter = {};
     this._currentSortType = DEFAULT;
     this._isLoading = true;
+    this._api = api;
 
     this._showButtonComponent = null;
     this._sortComponent = null;
@@ -60,7 +61,6 @@ export default class FilmsList {
   init() {
     render(this._filmListContainer, this._filmListComponent);
     this._renderFilmsList();
-    this._comments = this._commentsModel.getComments();
 
     this._filmsModel.addObserver(this._handleModelEvent);
     this._filterModel.addObserver(this._handleModelEvent);
@@ -98,7 +98,9 @@ export default class FilmsList {
   _handleViewAction(actionType, updateType, updatedData, filmID) {
     switch (actionType) {
       case UPDATE_FILM:
-        this._filmsModel.updateFilm(updateType, updatedData);
+        this._api.updateMovie(updatedData).then((response) => {
+          this._filmsModel.updateFilm(updateType, response);
+        });
         break;
       case ADD_COMMENT:
         this._filmsModel.addComment(updateType, updatedData, filmID);
