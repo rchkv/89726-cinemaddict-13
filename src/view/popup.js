@@ -1,6 +1,7 @@
 import SmartView from "./smart.js";
 import {createCommentsTemplate} from "./comments.js";
 import {formatDurationFromMinutes, generateID, generateRandomName, generateCommentDate} from "../utils/common.js";
+import dayjs from "dayjs";
 
 const createGenresTemplate = (genres) => {
 
@@ -40,7 +41,7 @@ const createFilmDetailsTemplate = (film) => {
   </tr>
   <tr class="film-details__row">
     <td class="film-details__term">Release Date</td>
-    <td class="film-details__cell">${releaseDate}</td>
+    <td class="film-details__cell">${dayjs(releaseDate).format(`DD MMMM YYYY`)}</td>
   </tr>
   <tr class="film-details__row">
     <td class="film-details__term">Runtime</td>
