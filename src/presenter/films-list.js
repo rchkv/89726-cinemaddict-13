@@ -7,6 +7,7 @@ import MostCommentedFilmsView from "../view/most-commented-films.js";
 import FilmsListView from "../view/films-list.js";
 import ShowMoreButtonView from "../view/show-more-button.js";
 import SortView from "../view/sort.js";
+import LoadingView from "../view/loading.js";
 import {RenderPosition, render, remove} from "../utils/render.js";
 import {filterRules} from "../utils/filter.js";
 import {sortByRating, sortByDate} from "../utils/sort.js";
@@ -16,7 +17,7 @@ const {AFTERBEGIN, BEFORE} = RenderPosition;
 const {ALL, RATED, COMMENTED} = FilmsType;
 const {DEFAULT, DATE, RATING} = SortType;
 const {UPDATE_FILM, ADD_COMMENT, DELETE_COMMENT} = UserAction;
-const {PATCH, MINOR, MAJOR} = UpdateType;
+const {PATCH, MINOR, MAJOR, INIT} = UpdateType;
 const EXTRA_FILM_COUNT = 2;
 const FILMS_COUNT_PER_STEP = 5;
 
@@ -31,6 +32,7 @@ export default class FilmsList {
     this._ratedFilmPresenter = {};
     this._commentedFilmPresenter = {};
     this._currentSortType = DEFAULT;
+    this._isLoading = true;
 
     this._showButtonComponent = null;
     this._sortComponent = null;
@@ -44,6 +46,7 @@ export default class FilmsList {
     this._allFilmsListComponent = new FilmsListView();
     this._topRatedListComponent = new FilmsListView();
     this._mostCommentedListComponent = new FilmsListView();
+    this._loadingComponent = new LoadingView();
 
     this._handleViewAction = this._handleViewAction.bind(this);
     this._handleModelEvent = this._handleModelEvent.bind(this);
@@ -57,6 +60,7 @@ export default class FilmsList {
   init() {
     render(this._filmListContainer, this._filmListComponent);
     this._renderFilmsList();
+    this._comments = this._commentsModel.getComments();
 
     this._filmsModel.addObserver(this._handleModelEvent);
     this._filterModel.addObserver(this._handleModelEvent);
@@ -141,6 +145,11 @@ export default class FilmsList {
         this._clearAllFilmsList({resetRenderedFilmsCount: true, resetSortType: true});
         this._renderFilmsList();
         break;
+      case INIT:
+        this._isLoading = false;
+        remove(this._loadingComponent);
+        this._renderFilmsList();
+        break;
     }
   }
 
@@ -162,6 +171,10 @@ export default class FilmsList {
 
   _renderFilmCards(container, films, type) {
     films.forEach((film) => this._renderFilmCard(container, film, type));
+  }
+
+  _renderLoading() {
+    render(this._filmListComponent, this._loadingComponent, AFTERBEGIN);
   }
 
   _renderNoFilms() {
@@ -277,6 +290,7 @@ export default class FilmsList {
     this._commentedFilmPresenter = {};
 
     remove(this._noFilmsComponent);
+    remove(this._loadingComponent);
 
     if (resetSortType) {
       this._currentSortType = DEFAULT;
@@ -284,6 +298,11 @@ export default class FilmsList {
   }
 
   _renderFilmsList() {
+    if (this._isLoading) {
+      this._renderLoading();
+      return;
+    }
+
     if (this._getFilms().length === 0) {
       this._renderNoFilms();
       return;
