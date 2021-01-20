@@ -1,6 +1,7 @@
 import SmartView from "./smart.js";
 import {createCommentsTemplate} from "./comments.js";
 import {formatDurationFromMinutes, generateID, generateRandomName, generateCommentDate} from "../utils/common.js";
+import dayjs from "dayjs";
 
 const createGenresTemplate = (genres) => {
 
@@ -40,7 +41,7 @@ const createFilmDetailsTemplate = (film) => {
   </tr>
   <tr class="film-details__row">
     <td class="film-details__term">Release Date</td>
-    <td class="film-details__cell">${releaseDate}</td>
+    <td class="film-details__cell">${dayjs(releaseDate).format(`DD MMMM YYYY`)}</td>
   </tr>
   <tr class="film-details__row">
     <td class="film-details__term">Runtime</td>
@@ -137,6 +138,7 @@ export default class PopUp extends SmartView {
 
   restoreHandlers() {
     this._setInnerHandlers();
+    this._restoreComments();
     this.setCloseButtonClickHandler(this._callback.closeButtonClick);
     this.setControlsToggleHandler(this._callback.controlsToggle);
     this.setSubmitCommentHandler(this._callback.submitComment);
@@ -182,7 +184,7 @@ export default class PopUp extends SmartView {
     this.getElement().querySelector(`.film-details__controls`).addEventListener(`change`, this._controlsToggleHandler);
   }
 
-  restoreComments() {
+  _restoreComments() {
     const newCommentsContainer = this.getElement().querySelector(`.film-details__comments-list`);
     this._renderComments(newCommentsContainer);
   }

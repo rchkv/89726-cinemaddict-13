@@ -3,7 +3,7 @@ import {formatDurationFromMinutes} from "../utils/common.js";
 import dayjs from "dayjs";
 
 const createFilmCardTemplate = (film) => {
-  const {poster, title, rating, releaseDate, duration, genres, shortDescription, comments, isWatchList, isWatched, isFavorites} = film;
+  const {poster, title, rating, releaseDate, duration, genres, description, comments, isWatchList, isWatched, isFavorites} = film;
 
   const addActiveClassName = (flag) => {
     return (flag) ? `film-card__controls-item--active` : ``;
@@ -19,7 +19,7 @@ const createFilmCardTemplate = (film) => {
       <span class="film-card__genre">${genres[0]}</span>
     </p>
     <img src="${poster}" alt="" class="film-card__poster">
-    <p class="film-card__description">${shortDescription}</p>
+    <p class="film-card__description">${description}</p>
     <a class="film-card__comments">${comments.length} comments</a>
     <form class="film-card__controls">
       <button class="film-card__controls-item button
