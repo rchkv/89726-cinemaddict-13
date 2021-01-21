@@ -42,7 +42,3 @@ export const MenuItem = {
   FAVORITES: `#favorites`,
   STATS: `#stats`
 };
-
-export const FirstNames = [`Michael`, `Stewart`, `Paul`];
-
-export const LastNames = [`Ballack`, `Downing`, `Scholes`];

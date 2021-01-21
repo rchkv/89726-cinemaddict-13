@@ -1,6 +1,6 @@
 import SmartView from "./smart.js";
 import {createCommentsTemplate} from "./comments.js";
-import {formatDurationFromMinutes, generateID, generateRandomName, generateCommentDate} from "../utils/common.js";
+import {formatDurationFromMinutes} from "../utils/common.js";
 import dayjs from "dayjs";
 
 const createGenresTemplate = (genres) => {
@@ -203,11 +203,9 @@ export default class PopUp extends SmartView {
     }
 
     this._comment = {
-      id: generateID(),
       emoji: this._emoji.emojiName,
       text: this._newComment.text,
-      author: generateRandomName(),
-      day: generateCommentDate(true)
+      day: new Date()
     };
   }
 

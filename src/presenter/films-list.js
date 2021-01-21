@@ -114,10 +114,14 @@ export default class FilmsList {
   _handleCommentsViewAction(actionType, updatedData, filmID) {
     switch (actionType) {
       case ADD_COMMENT:
-        this._commentsModel.addComment(actionType, updatedData, filmID);
+        this._api.addComment(updatedData, filmID).then((response) => {
+          this._commentsModel.addComment(actionType, response, filmID);
+        });
         break;
       case DELETE_COMMENT:
-        this._commentsModel.deleteComment(actionType, updatedData, filmID);
+        this._api.deleteComment(updatedData).then(() => {
+          this._commentsModel.deleteComment(actionType, updatedData, filmID);
+        });
         break;
     }
   }

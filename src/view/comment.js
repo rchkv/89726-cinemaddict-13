@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import Abstract from "./abstract.js";
 
 const createCommentTemplate = (comment) => {
@@ -12,7 +13,7 @@ const createCommentTemplate = (comment) => {
     <p class="film-details__comment-text">${text}</p>
     <p class="film-details__comment-info">
       <span class="film-details__comment-author">${author}</span>
-      <span class="film-details__comment-day">${day}</span>
+      <span class="film-details__comment-day">${dayjs(day).format(`YYYY/M/DD H:mm`)}</span>
       <button class="film-details__comment-delete">Delete</button>
     </p>
     </div>
