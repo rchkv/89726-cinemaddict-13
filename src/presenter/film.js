@@ -7,7 +7,7 @@ import CommentPresenter from "../presenter/comment.js";
 const body = document.querySelector(`body`);
 
 const {DEFAULT, POPUP} = Mode;
-const {UPDATE_FILM, ADD_COMMENT} = UserAction;
+const {ADD_COMMENT} = UserAction;
 const {PATCH, MINOR} = UpdateType;
 
 export default class Film {
@@ -18,6 +18,7 @@ export default class Film {
     this._changeMode = changeMode;
     this._changeComment = changeComment;
     this._commentsModel = commentsModel;
+    this._commentPresenter = {};
 
     this._filmCardComponent = null;
     this._popUpComponent = null;
@@ -85,6 +86,30 @@ export default class Film {
     }
   }
 
+  setSaving() {
+    this._popUpComponent.updateData({
+      isDisabled: true
+    });
+  }
+
+  setCommentDeleting(commentID) {
+    this._commentPresenter[commentID].setDeleting();
+  }
+
+  setAborting() {
+    const resetState = () => {
+      this._popUpComponent.updateData({
+        isDisabled: false
+      });
+    };
+    const newCommentForm = this._popUpComponent.getElement().querySelector(`.film-details__new-comment`);
+    this._popUpComponent.shake(newCommentForm, resetState);
+  }
+
+  setCommentAborting(commentID) {
+    this._commentPresenter[commentID].setAborting();
+  }
+
   _openPopUp() {
     render(this._popUpContainer, this._popUpComponent);
     if (this._isPopUpReOpened) {
@@ -101,15 +126,17 @@ export default class Film {
     remove(this._popUpComponent);
     document.removeEventListener(`keydown`, this._escKeyDownHandler);
     this._mode = DEFAULT;
-    this._changeFilm(UPDATE_FILM, MINOR, this._film);
+    this._changeFilm(MINOR, this._film);
+    Object.values(this._commentPresenter).forEach((presenter) => presenter.destroy());
+    this._commentPresenter = {};
   }
 
   _handleControlsChange(film) {
-    this._changeFilm(UPDATE_FILM, MINOR, film);
+    this._changeFilm(MINOR, film);
   }
 
   _handleToggleChange(film) {
-    this._changeFilm(UPDATE_FILM, PATCH, film);
+    this._changeFilm(PATCH, film);
   }
 
   _handleFilmDetailsClick() {
@@ -130,7 +157,10 @@ export default class Film {
   _handlePopUpCommentsRender(container) {
     const comments = this._commentsModel.getComments()[this._film.id];
     const commentPresenter = new CommentPresenter(container, this._film.id, this._changeComment);
-    comments.forEach((comment) => commentPresenter.init(comment));
+    comments.forEach((comment) => {
+      commentPresenter.init(comment);
+      this._commentPresenter[comment.id] = commentPresenter;
+    });
   }
 
   _handleShortcutKeysDown(container, newComment) {

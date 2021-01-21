@@ -57,10 +57,10 @@ const createFilmDetailsTemplate = (film) => {
 };
 
 const createPopUpTemplate = (data) => {
-  const {poster, title, originalTitle, rating, description, age, comments, isWatchList, isWatched, isFavorites, isEmoji, emojiName, text} = data;
+  const {poster, title, originalTitle, rating, description, age, comments, isWatchList, isWatched, isFavorites, isEmoji, emojiName, text, isDisabled} = data;
 
   const filmDetailsMarkup = createFilmDetailsTemplate(data);
-  const commentsMarkup = createCommentsTemplate(comments, isEmoji, emojiName, text);
+  const commentsMarkup = createCommentsTemplate(comments, isEmoji, emojiName, text, isDisabled);
 
   return (
     `<section class="film-details">
@@ -225,7 +225,7 @@ export default class PopUp extends SmartView {
   }
 
   static parseFilmToData(film, emoji, comment) {
-    return Object.assign({}, film, emoji, comment);
+    return Object.assign({}, film, emoji, comment, {isDisabled: false});
   }
 
   static parseDataToFilm(data) {
@@ -234,6 +234,7 @@ export default class PopUp extends SmartView {
     delete data.isEmoji;
     delete data.emojiName;
     delete data.text;
+    delete data.isDisabled;
 
     return data;
   }
