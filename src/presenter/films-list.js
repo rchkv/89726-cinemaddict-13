@@ -16,7 +16,7 @@ import {FilmsType, SortType, UserAction, UpdateType} from "../const.js";
 const {AFTERBEGIN, BEFORE} = RenderPosition;
 const {ALL, RATED, COMMENTED} = FilmsType;
 const {DEFAULT, DATE, RATING} = SortType;
-const {UPDATE_FILM, ADD_COMMENT, DELETE_COMMENT} = UserAction;
+const {ADD_COMMENT, DELETE_COMMENT} = UserAction;
 const {PATCH, MINOR, MAJOR, INIT} = UpdateType;
 const EXTRA_FILM_COUNT = 2;
 const FILMS_COUNT_PER_STEP = 5;
@@ -55,7 +55,6 @@ export default class FilmsList {
     this._handleShowButtonClick = this._handleShowButtonClick.bind(this);
     this._handleSortChange = this._handleSortChange.bind(this);
     this._handleCommentsViewAction = this._handleCommentsViewAction.bind(this);
-    this._handleCommentsModelEvent = this._handleCommentsModelEvent.bind(this);
   }
 
   init() {
@@ -64,14 +63,12 @@ export default class FilmsList {
 
     this._filmsModel.addObserver(this._handleModelEvent);
     this._filterModel.addObserver(this._handleModelEvent);
-    this._commentsModel.addObserver(this._handleCommentsModelEvent);
   }
 
   destroy() {
     this._clearAllFilmsList({resetRenderedFilmsCount: true, resetSortType: true});
     remove(this._filmListComponent);
     this._filmsModel.removeObserver(this._handleModelEvent);
-    this._commentsModel.removeObserver(this._handleCommentsModelEvent);
     this._filterModel.removeObserver(this._handleModelEvent);
   }
 
@@ -95,35 +92,67 @@ export default class FilmsList {
     Object.values(this._commentedFilmPresenter).forEach((presenter) => presenter.resetView());
   }
 
-  _handleViewAction(actionType, updateType, updatedData, filmID) {
-    switch (actionType) {
-      case UPDATE_FILM:
-        this._api.updateMovie(updatedData).then((response) => {
-          this._filmsModel.updateFilm(updateType, response);
-        });
-        break;
-      case ADD_COMMENT:
-        this._filmsModel.addComment(updateType, updatedData, filmID);
-        break;
-      case DELETE_COMMENT:
-        this._filmsModel.deleteComment(updateType, updatedData, filmID);
-        break;
-    }
+  _handleViewAction(updateType, updatedData) {
+    this._api.updateMovie(updatedData).then((response) => {
+      this._filmsModel.updateFilm(updateType, response);
+    });
   }
 
   _handleCommentsViewAction(actionType, updatedData, filmID) {
     switch (actionType) {
       case ADD_COMMENT:
-        this._commentsModel.addComment(actionType, updatedData, filmID);
+        if (this._allFilmPresenter[filmID]) {
+          this._allFilmPresenter[filmID].setSaving();
+        }
+        if (this._ratedFilmPresenter[filmID]) {
+          this._ratedFilmPresenter[filmID].setSaving();
+        }
+        if (this._commentedFilmPresenter[filmID]) {
+          this._commentedFilmPresenter[filmID].setSaving();
+        }
+        this._api.addComment(updatedData, filmID).then((response) => {
+          this._commentsModel.addComment(response, filmID);
+          this._filmsModel.addComment(PATCH, response, filmID);
+        })
+      .catch(() => {
+        if (this._allFilmPresenter[filmID]) {
+          this._allFilmPresenter[filmID].setAborting();
+        }
+        if (this._ratedFilmPresenter[filmID]) {
+          this._ratedFilmPresenter[filmID].setAborting();
+        }
+        if (this._commentedFilmPresenter[filmID]) {
+          this._commentedFilmPresenter[filmID].setAborting();
+        }
+      });
         break;
       case DELETE_COMMENT:
-        this._commentsModel.deleteComment(actionType, updatedData, filmID);
+        if (this._allFilmPresenter[filmID]) {
+          this._allFilmPresenter[filmID].setCommentDeleting(updatedData.id);
+        }
+        if (this._ratedFilmPresenter[filmID]) {
+          this._ratedFilmPresenter[filmID].setCommentDeleting(updatedData.id);
+        }
+        if (this._commentedFilmPresenter[filmID]) {
+          this._commentedFilmPresenter[filmID].setCommentDeleting(updatedData.id);
+        }
+        this._api.deleteComment(updatedData).then(() => {
+          this._commentsModel.deleteComment(updatedData, filmID);
+          this._filmsModel.deleteComment(PATCH, updatedData, filmID);
+        })
+      .catch(() => {
+        if (this._allFilmPresenter[filmID]) {
+          this._allFilmPresenter[filmID].setCommentAborting(updatedData.id);
+        }
+        if (this._ratedFilmPresenter[filmID]) {
+          this._ratedFilmPresenter[filmID].setCommentAborting(updatedData.id);
+        }
+        if (this._commentedFilmPresenter[filmID]) {
+          this._commentedFilmPresenter[filmID].setCommentAborting(updatedData.id);
+        }
+      });
         break;
     }
-  }
-
-  _handleCommentsModelEvent(actionType, updatedComment, filmID) {
-    this._handleViewAction(actionType, PATCH, updatedComment, filmID);
   }
 
   _handleModelEvent(updateType, updatedFilm) {

@@ -35,14 +35,14 @@ export default class Films extends Observer {
     this._notify(updateType, updatedFilm);
   }
 
-  addComment(updateType, newComment, filmID) {
+  addComment(updateType, comments, filmID) {
     const index = this._films.findIndex((film) => film.id === filmID);
 
     if (index === -1) {
       throw new Error(`Can't add comment to unexisting film`);
     }
 
-    this._films[index].comments = [...this._films[index].comments, `${newComment.id}`];
+    this._films[index].comments = comments.map((comment) => comment.id);
     this.updateFilm(updateType, this._films[index]);
   }
 

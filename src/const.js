@@ -18,7 +18,6 @@ export const Mode = {
 };
 
 export const UserAction = {
-  UPDATE_FILM: `UPDATE_FILM`,
   ADD_COMMENT: `ADD_COMMENT`,
   DELETE_COMMENT: `DELETE_COMMENT`
 };
@@ -42,7 +41,3 @@ export const MenuItem = {
   FAVORITES: `#favorites`,
   STATS: `#stats`
 };
-
-export const FirstNames = [`Michael`, `Stewart`, `Paul`];
-
-export const LastNames = [`Ballack`, `Downing`, `Scholes`];

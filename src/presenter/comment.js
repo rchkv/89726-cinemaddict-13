@@ -25,8 +25,23 @@ export default class Comment {
     remove(this._commentComponent);
   }
 
+  setDeleting() {
+    this._commentComponent.updateData({
+      isDeleting: true
+    });
+  }
+
+  setAborting() {
+    const resetState = () => {
+      this._commentComponent.updateData({
+        isDeleting: false
+      });
+    };
+
+    this._commentComponent.shake(this._commentComponent.getElement(), resetState);
+  }
+
   _handleDeleteClick(comment) {
     this._changeComment(DELETE_COMMENT, comment, this._filmID);
-    this.destroy();
   }
 }
