@@ -47,7 +47,7 @@ api.getMovies()
   })
   .catch(() => {
     commentsModel.setComments([]);
-    filterModel.setFilms(INIT, []);
+    filmModel.setFilms(INIT, []);
     profilePresenter.init();
     render(footer.lastElementChild, new FooterView(films.length));
   });

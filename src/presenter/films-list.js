@@ -10,7 +10,7 @@ import SortView from "../view/sort.js";
 import LoadingView from "../view/loading.js";
 import {RenderPosition, render, remove} from "../utils/render.js";
 import {filterRules} from "../utils/filter.js";
-import {sortByRating, sortByDate} from "../utils/sort.js";
+import {sortByRating, sortByDate, sortByCommentCount} from "../utils/sort.js";
 import {FilmsType, SortType, UserAction, UpdateType} from "../const.js";
 
 const {AFTERBEGIN, BEFORE} = RenderPosition;
@@ -84,6 +84,14 @@ export default class FilmsList {
         return sortByRating(filteredFilms.slice());
     }
     return filteredFilms;
+  }
+
+  _getTopRatedFilms() {
+    return sortByRating(this._filmsModel.getFilms().slice());
+  }
+
+  _getMostCommentedFilms() {
+    return sortByCommentCount(this._filmsModel.getFilms().slice());
   }
 
   _handleModeChange() {
@@ -225,16 +233,14 @@ export default class FilmsList {
   }
 
   _renderTopRatedList() {
-    const filmCount = this._getFilms().length;
-    const films = this._getFilms().slice(0, Math.min(filmCount, EXTRA_FILM_COUNT));
+    const films = this._getTopRatedFilms().slice(0, EXTRA_FILM_COUNT);
 
     this._renderFilmCards(this._topRatedListComponent, films, RATED);
     render(this._topRatedComponent, this._topRatedListComponent);
   }
 
   _renderMostCommentedList() {
-    const filmCount = this._getFilms().length;
-    const films = this._getFilms().slice(0, Math.min(filmCount, EXTRA_FILM_COUNT));
+    const films = this._getMostCommentedFilms().slice(0, EXTRA_FILM_COUNT);
 
     this._renderFilmCards(this._mostCommentedListComponent, films, COMMENTED);
     render(this._mostCommentedComponent, this._mostCommentedListComponent);
