@@ -154,13 +154,13 @@ export default class PopUp extends SmartView {
     evt.preventDefault();
     switch (evt.target.id) {
       case `watchlist`:
-        this._callback.controlsToggle(Object.assign({}, PopUp.parseDataToFilm(this._data), {isWatchList: evt.target.checked}));
+        this._callback.controlsToggle(Object.assign({}, PopUp.parseDataToFilm(this._data), {isWatchList: evt.target.checked}), true);
         break;
       case `watched`:
-        this._callback.controlsToggle(Object.assign({}, PopUp.parseDataToFilm(this._data), {isWatched: evt.target.checked, watchedDate: new Date()}));
+        this._callback.controlsToggle(Object.assign({}, PopUp.parseDataToFilm(this._data), {isWatched: evt.target.checked, watchedDate: new Date()}), true);
         break;
       case `favorite`:
-        this._callback.controlsToggle(Object.assign({}, PopUp.parseDataToFilm(this._data), {isFavorites: evt.target.checked}));
+        this._callback.controlsToggle(Object.assign({}, PopUp.parseDataToFilm(this._data), {isFavorites: evt.target.checked}), true);
         break;
     }
   }

@@ -110,6 +110,19 @@ export default class Film {
     this._commentPresenter[commentID].setAborting();
   }
 
+  setUpdateAborting(isPopUp) {
+    const resetState = () => {
+      if (isPopUp) {
+        this._popUpComponent.reset(this._film);
+      }
+      return;
+    };
+    if (isPopUp) {
+      this._popUpComponent.shake(this._popUpComponent.getElement(), resetState);
+    }
+    this._filmCardComponent.shake(this._filmCardComponent.getElement(), resetState);
+  }
+
   _openPopUp() {
     render(this._popUpContainer, this._popUpComponent);
     if (this._isPopUpReOpened) {
@@ -135,8 +148,8 @@ export default class Film {
     this._changeFilm(MINOR, film);
   }
 
-  _handleToggleChange(film) {
-    this._changeFilm(PATCH, film);
+  _handleToggleChange(film, popUpUpdate) {
+    this._changeFilm(PATCH, film, popUpUpdate);
   }
 
   _handleFilmDetailsClick() {

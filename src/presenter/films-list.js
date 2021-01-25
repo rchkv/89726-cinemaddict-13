@@ -100,9 +100,20 @@ export default class FilmsList {
     Object.values(this._commentedFilmPresenter).forEach((presenter) => presenter.resetView());
   }
 
-  _handleViewAction(updateType, updatedData) {
+  _handleViewAction(updateType, updatedData, isPopUp) {
     this._api.updateMovie(updatedData).then((response) => {
       this._filmsModel.updateFilm(updateType, response);
+    })
+    .catch(() => {
+      if (this._allFilmPresenter[updatedData.id]) {
+        this._allFilmPresenter[updatedData.id].setUpdateAborting(isPopUp);
+      }
+      if (this._ratedFilmPresenter[updatedData.id]) {
+        this._ratedFilmPresenter[updatedData.id].setUpdateAborting(isPopUp);
+      }
+      if (this._commentedFilmPresenter[updatedData.id]) {
+        this._commentedFilmPresenter[updatedData.id].setUpdateAborting(isPopUp);
+      }
     });
   }
 
