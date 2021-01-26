@@ -173,6 +173,7 @@ export default class Film {
       let commentPresenter = new CommentPresenter(container, this._film.id, this._changeComment);
       commentPresenter.init(comment);
       this._commentPresenter[comment.id] = commentPresenter;
+      commentPresenter = null;
     });
   }
 
