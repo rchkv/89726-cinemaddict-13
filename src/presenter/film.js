@@ -169,8 +169,8 @@ export default class Film {
 
   _handlePopUpCommentsRender(container) {
     const comments = this._commentsModel.getComments()[this._film.id];
-    const commentPresenter = new CommentPresenter(container, this._film.id, this._changeComment);
     comments.forEach((comment) => {
+      let commentPresenter = new CommentPresenter(container, this._film.id, this._changeComment);
       commentPresenter.init(comment);
       this._commentPresenter[comment.id] = commentPresenter;
     });
